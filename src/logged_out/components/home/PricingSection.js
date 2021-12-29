@@ -114,10 +114,9 @@ function PricingSection(props) {
                 pricing={
                   <span>
                     $14.99
-                  <Typography display="inline"> / month</Typography>
                   </span>
                 }
-                features={["Feature 1", "Feature 2", "Feature 3"]}
+                features={[`author:${book.author}`, `published:${book.published}`]}
 
               />
             </Grid>
