@@ -8,6 +8,7 @@ Logon from './components/Logon';
 import Dashboard from './components/Dashboard';
 import ProductTypes from './components/Product-types';
 import Product from './components/product';
+import Users from './components/users';
 const Routes = () => {
   return (
     <Switch>
@@ -42,6 +43,13 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/admin/products"
+
+      />
+       <PrivateRouteWithLayout
+        component={Users}
+        exact
+        layout={MainLayout}
+        path="/admin/users"
 
       />
     </Switch>
