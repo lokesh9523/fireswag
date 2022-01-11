@@ -1,12 +1,13 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import Dashboard from "./dashboard/Dashboard";
 import Posts from "./posts/Posts";
 import Subscription from "./subscription/Subscription";
 import PropsRoute from "../../shared/components/PropsRoute";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
+import Logon from "./Logon";
 
 const styles = (theme) => ({
   wrapper: {
@@ -69,7 +70,17 @@ function Routing(props) {
   return (
     <div className={classes.wrapper}>
       <Switch>
-        <PropsRoute
+        <Redirect
+          exact
+          from="/"
+          to="/logon"
+        />
+        {/* <PropsRoute
+          path="/logon"
+          component={Logon}
+        /> */}
+        <PropsRoute path="/logon" component={Logon}  />
+        {/* <PropsRoute
           path="/c/posts"
           component={Posts}
           EmojiTextArea={EmojiTextArea}
@@ -90,7 +101,7 @@ function Routing(props) {
           openAddBalanceDialog={openAddBalanceDialog}
         />
         <PropsRoute
-          path=""
+          path="/dashboard"
           component={Dashboard}
           toggleAccountActivation={toggleAccountActivation}
           pushMessageToSnackbar={pushMessageToSnackbar}
@@ -100,7 +111,10 @@ function Routing(props) {
           setTargets={setTargets}
           isAccountActivated={isAccountActivated}
           selectDashboard={selectDashboard}
-        />
+        /> */}
+        {/* <Redirect path="">
+
+        </Redirect> */}
       </Switch>
     </div>
   );

@@ -1,8 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Route } from "react-router-dom";
+import { Route } from "react-router-dom";import {
+  Box,
+  Grid,
+  Button,
+  TextField,
+  Link,
+  Typography,
+  InputAdornment,
+  IconButton,
+  CircularProgress
+} from '@material-ui/core';
 
 const renderMergedProps = (component, ...rest) => {
+  console.log(component,"=============wwwwwwwwwwwwwwwwwwwwwwwwwwww")
   const finalProps = Object.assign({}, ...rest);
   return React.createElement(component, finalProps);
 };
@@ -24,3 +35,4 @@ PropsRoute.propTypes = {
 };
 
 export default PropsRoute;
+ 

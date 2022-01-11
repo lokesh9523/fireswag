@@ -4,9 +4,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import theme from "./theme";
 import GlobalStyles from "./GlobalStyles";
 import Pace from "./shared/components/Pace";
+import ReduxDialogAlert from './shared/components/ReduxDialogAlert';
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
-
+const AdminComponent = lazy(() => import("./admin/main"));
 const LoggedOutComponent = lazy(() => import("./logged_out/components/Main"));
 
 function App() {
@@ -18,10 +19,11 @@ function App() {
         {/* <Pace color={theme.palette.primary.light} /> */}
         <Suspense fallback={<Fragment />}>
           <Switch>
-            <Route path="/c">
-              <LoggedInComponent />
+            <Route path="/admin">
+              <ReduxDialogAlert />
+              <AdminComponent />
             </Route>
-            <Route>
+            <Route path="/">
               <LoggedOutComponent />
             </Route>
           </Switch>

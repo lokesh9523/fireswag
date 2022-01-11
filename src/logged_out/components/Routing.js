@@ -11,7 +11,6 @@ import Cart from "./cart/Cart";
 
 function Routing(props) {
   const { blogPosts, selectBlog, selectHome, selectedBook, setSelectedBook, setCart, cart } = props;
-  console.log(cart, "==========================cart in routing")
   useLocationBlocker();
   return (
     <Switch>

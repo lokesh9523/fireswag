@@ -38,7 +38,7 @@ const styles = (theme) => ({
 
 function LoginDialog(props) {
   const {
-    setStatus,
+    setStatus, 
     history,
     classes,
     onClose,
