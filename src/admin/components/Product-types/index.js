@@ -20,7 +20,7 @@ import {
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
-import { addProductType, getProductType1 } from './../../../redux/actions/adminapi';
+import { addProductType, getProductType1, updateProductType } from './../../../redux/actions/adminapi';
 import CustomTable from './../../../shared/components/CustomTable';
 import moment from "moment";
 
@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 const ProductTypes = props => {
-    const { addProductType, getProductType1 } = props;
+    const { addProductType, getProductType1, updateProductType } = props;
     const classes = useStyles();
     // hooks
     const [loading, setLoading] = useState(false);
@@ -144,10 +144,8 @@ const ProductTypes = props => {
             setLoading(true);
             res = await getProductType1(queryParams);
             setLoading(false);
-            console.log('getUser1', res);
             if (res.success) {
                 setProductTypeList(res.data);
-                console.log(res.data)
                 setProductTypeCount(res.data.length);
             }
         })();
@@ -155,7 +153,7 @@ const ProductTypes = props => {
     }, [refetch, page, rowsPerPage, order, orderBy]);
 
     const handleClose = () => {
-        setOpenDialog(false); 
+        setOpenDialog(false);
         setProductTypeData({});
     };
 
@@ -171,11 +169,16 @@ const ProductTypes = props => {
 
     const handleProduct = async event => {
         event.preventDefault();
-        let res = await addProductType(productTypeData);
+        let res = {};
+        if (productTypeData._id) {
+            res = await updateProductType(productTypeData._id, productTypeData)
+        } else {
+            res = await addProductType(productTypeData);
+        }
         if (res.success) {
             setrefetch(refetch => (refetch + 1));
             setOpenDialog(false);
-            setProductTypeData({ name: "", active: "" })
+            setProductTypeData({})
         }
     }
     const handleEdit = (data) => {
@@ -334,7 +337,8 @@ const mapStateToProps = state => ({
 ProductTypes.propTypes = {
     // history: PropTypes.object,
     addProductType: PropTypes.func.isRequired,
-    getProductType1: PropTypes.func.isRequired
+    getProductType1: PropTypes.func.isRequired,
+    updateProductType: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { addProductType, getProductType1 })(withRouter(ProductTypes));
+export default connect(mapStateToProps, { addProductType, getProductType1, updateProductType })(withRouter(ProductTypes));

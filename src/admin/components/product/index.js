@@ -23,7 +23,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 // import Alert from '@material-ui/lab/Alert';
-import { addProducts, getProducts1, getProducts, uploadImage, apiUrl, getProductType } from './../../../redux/actions/adminapi';
+import { addProducts, getProducts1, getProducts, uploadImage, apiUrl, getProductType, updateProducts } from './../../../redux/actions/adminapi';
 import CustomTable from './../../../shared/components/CustomTable';
 import moment from "moment";
 import { handleImage } from './../helpers';
@@ -114,7 +114,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 const Product = props => {
-    const { addProducts, getProducts1, getProducts, productTypesData, uploadImage, getProductType } = props;
+    const { addProducts, getProducts1, getProducts, productTypesData, uploadImage, getProductType, updateProducts } = props;
     const classes = useStyles();
     const brandClasses = brandStyles();
     // hooks
@@ -160,10 +160,8 @@ const Product = props => {
             setLoading(true);
             res = await getProducts1(queryParams);
             setLoading(false);
-            console.log('getUser1', res);
             if (res.success) {
                 setProductTypeList(res.data);
-                console.log(res.data)
                 setProductTypeCount(res.data.length);
             }
         })();
@@ -199,15 +197,33 @@ const Product = props => {
             const resLocationLogo = await uploadImage(locationLogoData);
             if (resLocationLogo.success) {
                 productTypeData.image_url = '/images/' + resLocationLogo.data;
-                let res = await addProducts(productTypeData);
-                if (res.success) {
-                    setrefetch(refetch => (refetch + 1));
-                    setOpenDialog(false);
-                    setProductTypeData({ name: "", active: "" })
-                }
+                updateProduct();
+                // let res = await addProducts(productTypeData);
+                // if (res.success) {
+                //     setrefetch(refetch => (refetch + 1));
+                //     setOpenDialog(false);
+                //     setProductTypeData({ name: "", active: "" })
+                // }
 
             }
             // console.log(res, "=============================")
+        } else if (productTypeData.image_url) {
+            updateProduct();
+        } else {
+            alert("Plz check all the required fields")
+        }
+    }
+    const updateProduct = async () => {
+        let res = {};
+        if (productTypeData._id) {
+            res = await updateProducts(productTypeData._id, productTypeData);
+        } else {
+            res = await addProducts(productTypeData);
+        } if (res.success) {
+            setrefetch(refetch => (refetch + 1));
+            setOpenDialog(false);
+            setProductTypeData({});
+            setImgState({});
         }
     }
 
@@ -329,7 +345,7 @@ const Product = props => {
                                             displayEmpty
                                             fullWidth
                                             variant="outlined"
-                                            value={productTypeData.product_type_id?._id || ''}
+                                            value={productTypeData.product_type_id?._id || productTypeData.product_type_id || ''}
                                         >
                                             <MenuItem value=''>
                                                 <Typography >Select Product Type</Typography>
@@ -528,8 +544,9 @@ Product.propTypes = {
     getProducts: PropTypes.func.isRequired,
     uploadImage: PropTypes.func.isRequired,
     getProductType: PropTypes.func.isRequired,
-    getProducts1: PropTypes.func.isRequired
+    getProducts1: PropTypes.func.isRequired,
+    updateProducts: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { addProducts, getProducts, uploadImage, getProductType, getProducts1 })(withRouter(Product));
+export default connect(mapStateToProps, { addProducts, getProducts, uploadImage, getProductType, getProducts1, updateProducts })(withRouter(Product));
 
