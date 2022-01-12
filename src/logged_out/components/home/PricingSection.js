@@ -203,7 +203,7 @@ function PricingSection(props) {
                     ${book.price}
                   </span>
                 }
-                // features={[`author:${book.author}`, `published:${book.published}`]}
+                features={[`available:${book.total_count}`, `Pre Booking:${book.prebooking ? 'YES':'NO'}`]}
 
               />
             </Grid>
