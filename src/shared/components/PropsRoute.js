@@ -13,7 +13,6 @@ import { Route } from "react-router-dom";import {
 } from '@material-ui/core';
 
 const renderMergedProps = (component, ...rest) => {
-  console.log(component,"=============wwwwwwwwwwwwwwwwwwwwwwwwwwww")
   const finalProps = Object.assign({}, ...rest);
   return React.createElement(component, finalProps);
 };

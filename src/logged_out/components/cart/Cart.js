@@ -16,6 +16,7 @@ import {
 
     Grid
 } from "@material-ui/core";
+import { getProductsById, apiUrl } from './../../../redux/actions/userapi';
 
 
 const useStyles = makeStyles(theme => ({
@@ -34,35 +35,6 @@ const useStyles = makeStyles(theme => ({
 function Cart(props) {
     const { history, cart } = props;
     const classes = useStyles();
-    const books = [
-        {
-            link: "/book1",
-            name: "Crypto Currency",
-            url: `${process.env.PUBLIC_URL}/images/logged_out/book1.jpeg`,
-            author: 'Alex',
-            published: '2012',
-            description: 'Most cryptocurrencies use blockchain technology to record transactions. For example, the bitcoin network and Ethereum network are both based on blockchain. ',
-            price: '$14.99'
-        },
-        {
-            link: "/book2",
-            name: "Block Chain Technology",
-            url: `${process.env.PUBLIC_URL}/images/logged_out/book2.jpeg`,
-            author: 'Alex',
-            published: '2012',
-            description: 'Most cryptocurrencies use blockchain technology to record transactions. For example, the bitcoin network and Ethereum network are both based on blockchain. ',
-            price: '$14.99'
-        },
-        {
-            link: "/book3",
-            name: "Mastering Crypto",
-            url: `${process.env.PUBLIC_URL}/images/logged_out/book3.jpg`,
-            author: 'Alex',
-            published: '2012',
-            description: 'Most cryptocurrencies use blockchain technology to record transactions. For example, the bitcoin network and Ethereum network are both based on blockchain. ',
-            price: '$14.99'
-        },
-    ];
     return (
         <Fragment>
             <div className={classes.root}>
@@ -90,7 +62,7 @@ function Cart(props) {
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row" >
-                                            <img src={row.url} alt="book" style={{ width: '10%' }}></img>
+                                            <img src={`${apiUrl}${row.image_url}`} alt="book" style={{ width: '10%' }}></img>
                                         </TableCell>
                                         <TableCell align="right"> {row.name}</TableCell>
                                         <TableCell align="right">{row.price}</TableCell>

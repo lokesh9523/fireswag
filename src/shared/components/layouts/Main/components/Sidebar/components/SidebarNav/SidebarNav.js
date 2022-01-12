@@ -33,7 +33,6 @@ const SidebarNav = props => {
   const classes = useStyles();
   
   const onLogout = () => {
-    console.log("iam hereeeee")
     showConfirmationDialog('Are you sure?', 'Do you want to log out.', 'LOGOUT');
   }
 

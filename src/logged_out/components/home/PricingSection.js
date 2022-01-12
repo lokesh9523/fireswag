@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
   Grid,
   Typography,
+  Button,
   // isWidthUp,
   withWidth,
-  withStyles
+  withStyles,
+  CircularProgress,
 } from "@material-ui/core";
 import PriceCard from "./PriceCard";
 import calculateSpacing from "./calculateSpacing";
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { getProductType, getProducts,apiUrl } from './../../../redux/actions/userapi';
+import clsx from 'clsx';
+
 
 const styles = theme => ({
   containerFix: {
@@ -44,12 +50,47 @@ const styles = theme => ({
       marginRight: "auto",
       maxWidth: 360
     }
-  }
+  },
+  button: {
+    color: 'white',
+    backgroundColor: '#3cb371',
+    fontSize: '1rem',
+    padding: '4px 6px',
+    // minWidth: '125px',
+    borderRadius: 8,
+    '&:hover': {
+      backgroundColor: theme.palette.brandDark,
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: theme.palette.brand
+      }
+    },
+    '&.MuiButton-containedSizeLarge': {
+      fontSize: '1.4rem',
+      padding: '12px 16px',
+      minWidth: '140px',
+    },
+    '&.MuiButton-containedSizeSmall': {
+      fontSize: '0.85rem',
+      padding: '6px 8px',
+      minWidth: '94px',
+    },
+  },
+  spinner: {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    zIndex: 9
+  },
 });
 
 function PricingSection(props) {
-  const { width, classes, history } = props;
-  const [selectedBookDetails, setSelectedBookDetails] = useState('')
+  const { width, classes, history, getProductType, getProducts, userProductTypesData } = props;
+  const [selectedBookDetails, setSelectedBookDetails] = useState('');
+  const [produttypeList, setProductTypeList] = useState([]);
+  const [selectedProductType, setSelectedproductType] = useState(null);
+  const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const books = [
     {
       link: "/book1",
@@ -80,23 +121,69 @@ function PricingSection(props) {
     },
   ];
 
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!userProductTypesData) {
+        await getProductType();
+        setProductTypeList(userProductTypesData);
+      }
+      // setSelectedproductType(userProductTypesData[0]._id);
+    }
+    fetchData();
+  }, [userProductTypesData, getProductType]);
+
+  useEffect(() => {
+    (async () => {
+      if (selectedProductType) {
+        let queryParams = `product_type_id=${selectedProductType}`;
+        let res = {};
+        setLoading(true);
+        res = await getProducts(queryParams);
+        setLoading(false);
+        if (res.success) {
+          setProductList(res.data || []);
+        }
+
+      }
+    })();
+    // eslint-disable-next-line
+  }, [selectedProductType]);
+
   const handleChange = (book, e) => {
-    setSelectedBookDetails(e);
-    history.push(`book/${e}`);
+    setSelectedBookDetails(book._id);
+    history.push(`product/${book._id}`);
+  }
+  const handleProductType = (id) => {
+    setSelectedproductType(id);
   }
 
   return (
     <div className="lg-p-top" style={{ backgroundColor: "#FFFFFF" }}>
-      <Typography variant="h3" align="center">
-        PRODUCTS
+      <Grid container direction="row" spacing={1}>
+        <Grid item sm={2}>
+          <Typography variant="h5" align="center">
+            Products:
       </Typography>
+        </Grid>
+        {userProductTypesData && userProductTypesData.length && userProductTypesData.map((book, index) => (
+          <Grid item sm={1} key={index}>
+            <Button className={classes.button} onClick={()=>handleProductType(book._id)}>
+              {book.name}
+            </Button>
+          </Grid>
+        ))}
+      </Grid>
       <div className={classNames("container-fluid", classes.containerFix)}>
+
         <Grid
           container
           spacing={calculateSpacing(width)}
           className={classes.gridContainer}
-        >
-          {books.map((book, index) => (
+        >{loading ? <><CircularProgress
+          className={clsx(classes.spinner)}
+        /></> : <>
+          {productList.map((book, index) => (
             <Grid
               item
               xs={12}
@@ -109,110 +196,38 @@ function PricingSection(props) {
             >
               <PriceCard
                 highlighted={selectedBookDetails === index ? true : false}
-                imageUrl={book.url}
+                imageUrl={`${apiUrl}${book.image_url}`}
                 title={book.name}
                 pricing={
                   <span>
-                    $14.99
+                    ${book.price}
                   </span>
                 }
-                features={[`author:${book.author}`, `published:${book.published}`]}
+                // features={[`author:${book.author}`, `published:${book.published}`]}
 
               />
             </Grid>
           ))}
-          {/* <Grid
-            item
-            xs={12}
-            sm={6}
-            lg={3}
-            className={classes.cardWrapper}
-            data-aos="zoom-in-up"
-          >
-            <PriceCard
-              title="Starter"
-              pricing={
-                <span>
-                  $14.99
-                  <Typography display="inline"> / month</Typography>
-                </span>
-              }
-              features={["Feature 1", "Feature 2", "Feature 3"]}
-            />
-          </Grid>
-          <Grid
-            item
-            className={classes.cardWrapperHighlighted}
-            xs={12}
-            sm={6}
-            lg={3}
-            data-aos="zoom-in-up"
-            data-aos-delay="200"
-          >
-            <PriceCard
-              highlighted
-              title="Premium"
-              pricing={
-                <span>
-                  $29.99
-                  <Typography display="inline"> / month</Typography>
-                </span>
-              }
-              features={["Feature 1", "Feature 2", "Feature 3"]}
-            />
-          </Grid>
-          <Grid
-            item
-            className={classes.cardWrapper}
-            xs={12}
-            sm={6}
-            lg={3}
-            data-aos="zoom-in-up"
-            data-aos-delay={isWidthUp("md", width) ? "400" : "0"}
-          >
-            <PriceCard
-              title="Business"
-              pricing={
-                <span>
-                  $49.99
-                  <Typography display="inline"> / month</Typography>
-                </span>
-              }
-              features={["Feature 1", "Feature 2", "Feature 3"]}
-            />
-          </Grid>
-          <Grid
-            item
-            className={classes.cardWrapper}
-            xs={12}
-            sm={6}
-            lg={3}
-            data-aos="zoom-in-up"
-            data-aos-delay={isWidthUp("md", width) ? "600" : "200"}
-          >
-            <PriceCard
-              title="Tycoon"
-              pricing={
-                <span>
-                  $99.99
-                  <Typography display="inline"> / month</Typography>
-                </span>
-              }
-              features={["Feature 1", "Feature 2", "Feature 3"]}
-            />
-          </Grid> */}
+        </>
+          }
         </Grid>
       </div>
     </div>
   );
 }
 
+const mapStateToProps = state => ({
+  userProductTypesData: state.data.userProductTypesData
+});
+
 PricingSection.propTypes = {
   width: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  getProductType: PropTypes.func.isRequired,
+  getProducts: PropTypes.func.isRequired
 };
 // export default withRouter(withStyles(styles)(LoginDialog));
 // export default withStyles(styles, { withTheme: true })(
 //   withWidth()(PricingSection)
 // );
-export default withRouter(withStyles(styles, { withTheme: true })(withWidth()(PricingSection)));
+export default connect(mapStateToProps, { getProductType, getProducts })(withRouter(withStyles(styles, { withTheme: true })(withWidth()(PricingSection))));

@@ -107,7 +107,6 @@ const SearchBar = props => {
   const classes = useStyles();
 
   const toggleSearchBoxIcon = () => {
-    console.log('isOpen---', isOpen);
     toggleOpen(!isOpen);
   };
 

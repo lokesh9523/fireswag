@@ -47,8 +47,6 @@ function Main(props) {
     // const [isAccountActivated, setIsAccountActivated] = useState(false);
     // const [isAddBalanceDialogOpen, setIsAddBalanceDialogOpen] = useState(false);
     // const [pushMessageToSnackbar, setPushMessageToSnackbar] = useState(null);
-
-        // console.log("iam heeeeeeee")
     return (
         <Fragment>
             <main className={classNames(classes.main)}>

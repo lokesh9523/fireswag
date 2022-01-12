@@ -44,7 +44,6 @@ const Main = props => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
     defaultMatches: true
   });
-
   const [openSidebar, setOpenSidebar] = useState(false);
 
   const handleSidebarOpen = () => {

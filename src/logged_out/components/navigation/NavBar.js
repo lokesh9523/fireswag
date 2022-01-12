@@ -52,7 +52,6 @@ function NavBar(props) {
     selectedTab,
     cart
   } = props;
-  console.log(cart, "=====================================")
   const menuItems = [
     {
       link: "/",

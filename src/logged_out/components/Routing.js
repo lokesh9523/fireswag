@@ -36,7 +36,7 @@ function Routing(props) {
         blogPosts={blogPosts}
       />
       <PropsRoute path="/cart" component={Cart} setCart={setCart} cart={cart}></PropsRoute>
-      <PropsRoute exact path="/book/:bookid" component={BookDetails} selectedBook={selectedBook} setCart={setCart} cart={cart} />
+      <PropsRoute exact path="/product/:productid" component={BookDetails} selectedBook={selectedBook} setCart={setCart} cart={cart} />
       <PropsRoute path="/" component={Home} selectHome={selectHome} />
     </Switch>
   );

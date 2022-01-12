@@ -206,7 +206,6 @@ const Product = props => {
                 // }
 
             }
-            // console.log(res, "=============================")
         } else if (productTypeData.image_url) {
             updateProduct();
         } else {
@@ -293,7 +292,7 @@ const Product = props => {
                 <Grid item sm={8}>
 
                 </Grid>
-                <Grid item sm={4} className={classes.buttonItem}><Button onClick={(e) => handleOpenDialog()} className={classes.button}>AddProductTypes</Button></Grid>
+                <Grid item sm={4} className={classes.buttonItem}><Button onClick={(e) => handleOpenDialog()} className={classes.button}>Add Products</Button></Grid>
             </Grid>
 
             <CustomTable
@@ -430,7 +429,7 @@ const Product = props => {
                                         label="Prebooking"
                                         name="pre_booking"
                                         displayEmpty
-                                        value={productTypeData.pre_booking || ''}
+                                        value={productTypeData.pre_booking || false}
                                     >
                                         <MenuItem value=''>
                                             <Typography >Select Pre-booking</Typography>
@@ -457,7 +456,7 @@ const Product = props => {
                                         label="Active"
                                         name="active"
                                         displayEmpty
-                                        value={productTypeData.active || ''}
+                                        value={productTypeData.active || false}
                                     >
                                         <MenuItem value=''>
                                             <Typography >Select Status</Typography>
@@ -491,7 +490,7 @@ const Product = props => {
                                     <Grid item sm={6}>
                                         <Box height="100%">
                                             <div className={brandClasses.uploadContanier} style={{ height: '100%' }}>
-                                                <Typography className={brandClasses.uploadTitle}>Upload Site Logo</Typography>
+                                                <Typography >Upload Image</Typography>
                                                 <Typography display="inline" className={brandClasses.uploadDesc} style={{ padding: '4px' }}>Select your file or drag and drop it here</Typography>
                                                 <div className={brandClasses.uploadImageContainer}>
                                                     <input type="file" accept="image/*" className={brandClasses.uploadInput} id="icon-button-file" onChange={handlePhotoChange} />
@@ -524,7 +523,7 @@ const Product = props => {
                             alignItems="center" spacing={3}>
                             <Grid item sm={8}></Grid>
                             <Grid item sm={4} className={classes.buttonItem}>
-                                <Button type="submit" className={classes.button} >ADD</Button>
+                                <Button type="submit" className={classes.button} >{productTypeData && productTypeData._id ? 'SAVE' : 'ADD'}</Button>
                             </Grid>
                         </Grid>
                     </form></DialogContent>

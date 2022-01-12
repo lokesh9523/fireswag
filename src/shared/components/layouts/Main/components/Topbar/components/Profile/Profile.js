@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
 const Profile = props => {
   const { account } = props;
   // const apiurl = ""
-  console.log(account, typeof account, "=================================")
   const accountDetails = typeof account === 'object' ? account : JSON.parse(account)
   const { first_name, last_name, photo } = accountDetails;
 

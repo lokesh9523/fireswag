@@ -44,7 +44,6 @@ function Main(props) {
   }, [setSelectedTab]);
 
   const openLoginDialog = useCallback(() => {
-    console.log("iam hereee")
     setDialogOpen("login");
     setIsMobileDrawerOpen(false);
   }, [setDialogOpen, setIsMobileDrawerOpen]);
@@ -100,7 +99,6 @@ function Main(props) {
   }, [setIsCookieRulesDialogOpen]);
 
   useEffect(fetchBlogPosts, [fetchBlogPosts]);
-  console.log(cart, "cart in main")
   return (
     <div className={classes.wrapper}>
       {!isCookieRulesDialogOpen && (

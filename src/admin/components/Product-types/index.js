@@ -238,7 +238,7 @@ const ProductTypes = props => {
                 <Grid item sm={8}>
 
                 </Grid>
-                <Grid item sm={4} className={classes.buttonItem}><Button onClick={(e) => handleOpenDialog()} className={classes.button}>AddProductsTypes</Button></Grid>
+                <Grid item sm={4} className={classes.buttonItem}><Button onClick={(e) => handleOpenDialog()} className={classes.button}>Add ProductsTypes</Button></Grid>
             </Grid>
 
             <CustomTable
@@ -301,7 +301,7 @@ const ProductTypes = props => {
                                         label="Active"
                                         name="active"
                                         displayEmpty
-                                        value={productTypeData.active || ''}
+                                        value={productTypeData.active || false}
                                     >
                                         <MenuItem value=''>
                                             <Typography >Select Type</Typography>

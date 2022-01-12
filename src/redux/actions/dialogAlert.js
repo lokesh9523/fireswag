@@ -27,7 +27,6 @@ export const showFailedDialog = (res) => dispatch => {
 }
 
 export const showConfirmationDialog = (title, message, onAction) => dispatch => {
-  console.log("iam hereeeeeeebbbbbbbb")
   dispatch({
     type: types.SHOW_CONFIRMATION_DIALOG,
     payload: { title, message, onAction }
