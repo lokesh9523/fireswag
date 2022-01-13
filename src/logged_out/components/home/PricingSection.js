@@ -51,6 +51,58 @@ const styles = theme => ({
       maxWidth: 360
     }
   },
+  products: {
+    width: "40%",
+    height: 100,
+    display: "flex",
+    position: "absolute",
+    boxShadow: "0px 1px 6px 0px #17bb43ad",
+    marginTop: "-8em",
+    alignItems: "flex-end",
+    marginLeft: "auto",
+    marginBottom: "3em",
+    marginRight: "2em",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    backgroundColor: "#fff",
+    left: "56%",
+    borderBottomLeftRadius: 1000,
+    borderBottomRightRadius: 1000,
+    [theme.breakpoints.down("xs")]: {
+      left: 0,
+    width: "100%",
+    height: 100,
+    display: "flex",
+    position: "absolute",
+    boxShadow: "0px 1px 6px 0px #17bb43ad",
+    marginTop: "-3.5em",
+    alignItems: "flex-end",
+    marginLeft: "auto",
+    marginRight: "2em",
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+
+    },
+
+    
+  },
+  productClass: {
+    marginInline: "1.25em",
+    position: "relative",
+    left: "-25%",
+    [theme.breakpoints.down("xs")]: {
+      left: "0",
+    }
+  },
+  productsName: {
+    color: "#71BB43",
+    fontSize: "1.25em",
+    fontWeight: 500,
+    marginTop: "-2em",
+  },
   button: {
     color: 'white',
     backgroundColor: '#3cb371',
@@ -160,19 +212,22 @@ function PricingSection(props) {
 
   return (
     <div className="lg-p-top" style={{ backgroundColor: "#FFFFFF" }}>
-      <Grid container direction="row" spacing={1}>
-        <Grid item sm={2}>
+      <Grid direction="row" spacing={1}>
+        {/* <Grid gridColumn="span 6" item sm={2}>
           <Typography variant="h5" align="center">
             Products:
-      </Typography>
-        </Grid>
+          </Typography>
+        </Grid> */}
+        <Grid className={classes.products}>
         {userProductTypesData && userProductTypesData.length && userProductTypesData.map((book, index) => (
-          <Grid item sm={1} key={index}>
-            <Button className={classes.button} onClick={()=>handleProductType(book._id)}>
+          
+          <div className={classes.productClass} item sm={1} key={index}>
+            <div className={classes.productsName} onClick={()=>handleProductType(book._id)}>
               {book.name}
-            </Button>
-          </Grid>
+            </div>
+          </div>
         ))}
+        </Grid>
       </Grid>
       <div className={classNames("container-fluid", classes.containerFix)}>
 
