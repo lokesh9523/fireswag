@@ -13,10 +13,11 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
+import ShoppingCartIcon from '@material-ui/icons//ShoppingCart';
 // import HowToRegIcon from "@material-ui/icons/HowToReg";
 // import LockOpenIcon from "@material-ui/icons/LockOpen";
 // import BookIcon from "@material-ui/icons/Book";
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+// import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
 import SearchIcon from '@material-ui/icons/Search';
 import PhoenixLogo from "../../../assets/img/phoenix.svg";
@@ -37,7 +38,7 @@ const styles = theme => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  phoenixLogo:{
+  phoenixLogo: {
     height: 36
   },
   searchbox: {
@@ -116,7 +117,7 @@ const styles = theme => ({
     },
   },
   signIn: {
-    background:  "linear-gradient(to bottom, #106B36, #71BB43);",
+    background: "linear-gradient(to bottom, #106B36, #71BB43);",
     padding: "8px 18px",
     color: "#FFFFFF",
   },
@@ -125,14 +126,16 @@ const styles = theme => ({
   },
   menuButtonText: {
     fontSize: theme.typography.body1.fontSize,
-    fontWeight: theme.typography.h6.fontWeight
+    fontWeight: theme.typography.h6.fontWeight,
+    color: 'green'
   },
   brandText: {
     fontFamily: "'Baloo Bhaijaan', cursive",
     fontWeight: 400
   },
   noDecoration: {
-    textDecoration: "none !important"
+    textDecoration: "none !important",
+    color: 'green'
   }
 });
 
@@ -151,13 +154,17 @@ function NavBar(props) {
     {
       link: "/",
       name: "Home",
-      icon: <HomeIcon className="text-white" />
+      // icon: <HomeIcon />
     },
     {
       link: "/cart",
       name: "cart",
-      icon: <ShoppingBasketIcon />
+      icon: <ShoppingCartIcon />
     },
+    {
+      link: "",
+      name: "Sign In"
+    }
     // {
     //   name: "Register",
     //   onClick: openRegisterDialog,
@@ -196,22 +203,22 @@ function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-            <img src={PhoenixLogo} className={classes.phoenixLogo} alt="Phoenix Icon" />
-            <Hidden smDown>
-          <div>
-          <input
-          type="search"
-          placeholder="Search for collection or items"
-          name="search"
-          className={classes.searchboxInput}
-          required
-          onChange={props.onChange}
-        />
-        <span
-          className={classes.searchboxIcon}>
-          <SearchIcon className={classes.searchIcon} />
-        </span>
-          </div>
+          <img src={PhoenixLogo} className={classes.phoenixLogo} alt="Phoenix Icon" />
+          <Hidden smDown>
+            <div>
+              <input
+                type="search"
+                placeholder="Search for collection or items"
+                name="search"
+                className={classes.searchboxInput}
+                required
+                onChange={props.onChange}
+              />
+              <span
+                className={classes.searchboxIcon}>
+                <SearchIcon className={classes.searchIcon} />
+              </span>
+            </div>
           </Hidden>
           <div>
             <img src={Logo} className={classes.logo} alt="Logo" />
@@ -240,7 +247,7 @@ function NavBar(props) {
                         color="secondary"
                         size="large"
                         classes={{ text: classes.menuButtonText }}
-                      >{element.name === 'cart' ? <Badge badgeContent={count} color="primary">{element.name}
+                      >{element.icon ? element.icon : ""}{element.name === 'cart' ? <Badge badgeContent={count} color="primary">{element.name}
                       </Badge> : element.name}
 
                       </Button>
@@ -259,29 +266,34 @@ function NavBar(props) {
                   </Button>
                 );
               })}
-              <Button className={classes.signIn}>
+              {/* <Button className={classes.signIn}>
                 Sign In
-              </Button>
+              </Button> */}
               <Button>
-                <img src = {NightMode} className={classes.nightMode} alt="Night Mode" />
+                <img src={NightMode} className={classes.nightMode} alt="Night Mode" />
               </Button>
             </Hidden>
           </div>
         </Toolbar>
       </AppBar>
       <NavigationDrawer
-        menuItems={menuItems.map((element) => ({
-          link: element.link,
-          name: element.name,
-          icon: element.icon.mobile,
-          onClick: element.onClick,
-        }))}
-        anchor="left"
-        open={isMobileOpen}
+        // menuItems={menuItems.map((element) => ({
+        //   link: element.link,
+        //   name: element.name,
+        //   icon: element.icon.mobile,
+        //   onClick: element.onClick,
+        // }))}
+        menuItems={menuItems}
+        anchor="right"
+        open={mobileDrawerOpen}
         selectedItem={selectedTab}
-        onClose={closeMobileDrawer}
+        onClose={handleMobileDrawerClose}
+      // anchor="left"
+      // open={isMobileOpen}
+      // selectedItem={selectedTab}
+      // onClose={closeMobileDrawer}
       />
-    </div>
+    </div >
   );
 }
 

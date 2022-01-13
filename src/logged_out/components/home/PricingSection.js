@@ -14,7 +14,7 @@ import PriceCard from "./PriceCard";
 import calculateSpacing from "./calculateSpacing";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { getProductType, getProducts,apiUrl } from './../../../redux/actions/userapi';
+import { getProductType, getProducts, apiUrl } from './../../../redux/actions/userapi';
 import clsx from 'clsx';
 
 
@@ -70,24 +70,24 @@ const styles = theme => ({
     borderBottomRightRadius: 1000,
     [theme.breakpoints.down("xs")]: {
       left: 0,
-    width: "100%",
-    height: 100,
-    display: "flex",
-    position: "absolute",
-    boxShadow: "0px 1px 6px 0px #17bb43ad",
-    marginTop: "-3.5em",
-    alignItems: "flex-end",
-    marginLeft: "auto",
-    marginRight: "2em",
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+      width: "100%",
+      height: 100,
+      display: "flex",
+      position: "absolute",
+      boxShadow: "0px 1px 6px 0px #17bb43ad",
+      marginTop: "-3.5em",
+      alignItems: "flex-end",
+      marginLeft: "auto",
+      marginRight: "2em",
+      flexDirection: "row",
+      justifyContent: "center",
+      backgroundColor: "#fff",
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
 
     },
 
-    
+
   },
   productClass: {
     marginInline: "1.25em",
@@ -219,14 +219,14 @@ function PricingSection(props) {
           </Typography>
         </Grid> */}
         <Grid className={classes.products}>
-        {userProductTypesData && userProductTypesData.length && userProductTypesData.map((book, index) => (
-          
-          <div className={classes.productClass} item sm={1} key={index}>
-            <div className={classes.productsName} onClick={()=>handleProductType(book._id)}>
-              {book.name}
+          {userProductTypesData && userProductTypesData.length && userProductTypesData.map((book, index) => (
+
+            <div className={classes.productClass} item sm={1} key={index}>
+              <div className={classes.productsName} onClick={() => handleProductType(book._id)} style={{ cursor: 'pointer' }}>
+                {book.name}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         </Grid>
       </Grid>
       <div className={classNames("container-fluid", classes.containerFix)}>
@@ -258,7 +258,7 @@ function PricingSection(props) {
                     ${book.price}
                   </span>
                 }
-                features={[`available:${book.total_count}`, `Pre Booking:${book.prebooking ? 'YES':'NO'}`]}
+                features={[`available:${book.total_count}`, `Pre Booking:${book.prebooking ? 'YES' : 'NO'}`]}
 
               />
             </Grid>
