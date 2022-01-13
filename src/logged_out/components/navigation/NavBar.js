@@ -20,7 +20,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
 import SearchIcon from '@material-ui/icons/Search';
 import PhoenixLogo from "../../../assets/img/phoenix.svg";
-import Logo from "../../../assets/img/logoOrange.png";
+import Logo from "../../../assets/img/logoGreen.png";
 import NightMode from "../../../assets/img/nightMode.svg";
 
 const styles = theme => ({
