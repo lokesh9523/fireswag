@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -26,7 +26,11 @@ import NightMode from "../../../assets/img/nightMode.svg";
 const styles = theme => ({
   appBar: {
     boxShadow: '0px 1px 6px 0px #17bb43ad',
-    backgroundColor: theme.palette.common.white
+    backgroundColor: theme.palette.common.white,
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      marginLeft: 0,
+    },
   },
   toolbar: {
     display: "flex",
@@ -46,14 +50,14 @@ const styles = theme => ({
     transition: 'width 0.3s'
   },
   searchboxInput: {
-    top: 9,
+    top: 10,
     left: "5%",
     width: "25%",
     border: "1px solid #707070",
     height: 40,
     margin: 0,
     outline: 0,
-    padding: "0px 45px 0px 44px",
+    padding: "0px 5px 0px 44px",
     position: "absolute",
     fontSize: 18,
     borderRadius: 4
@@ -79,7 +83,7 @@ const styles = theme => ({
     zIndex: -1
   },
   searchboxIcon: {
-    top: 10,
+    top: 11,
     left: "5.2%",
     color: "#707070",
     width: 40,
@@ -106,6 +110,10 @@ const styles = theme => ({
     position: 'absolute',
     left: '50%',
     top: 10,
+    [theme.breakpoints.down("xs")]: {
+      height: 64,
+      left: '44%'
+    },
   },
   signIn: {
     background:  "linear-gradient(to bottom, #106B36, #71BB43);",
@@ -162,6 +170,25 @@ function NavBar(props) {
     // }
   ];
   const [count, setCount] = useState(0);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
+
+  const openMobileDrawer = useCallback(() => {
+    setIsMobileOpen(true);
+  }, [setIsMobileOpen]);
+
+  const closeMobileDrawer = useCallback(() => {
+    setIsMobileOpen(false);
+  }, [setIsMobileOpen]);
+
+  const openDrawer = useCallback(() => {
+    setIsSideDrawerOpen(true);
+  }, [setIsSideDrawerOpen]);
+
+  const closeDrawer = useCallback(() => {
+    setIsSideDrawerOpen(false);
+  }, [setIsSideDrawerOpen]);
+
   useEffect(() => {
     setCount(cart.length)
   }, [cart])
@@ -170,7 +197,7 @@ function NavBar(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
             <img src={PhoenixLogo} className={classes.phoenixLogo} alt="Phoenix Icon" />
-
+            <Hidden smDown>
           <div>
           <input
           type="search"
@@ -185,6 +212,7 @@ function NavBar(props) {
           <SearchIcon className={classes.searchIcon} />
         </span>
           </div>
+          </Hidden>
           <div>
             <img src={Logo} className={classes.logo} alt="Logo" />
           </div>
@@ -242,11 +270,16 @@ function NavBar(props) {
         </Toolbar>
       </AppBar>
       <NavigationDrawer
-        menuItems={menuItems}
-        anchor="right"
-        open={mobileDrawerOpen}
+        menuItems={menuItems.map((element) => ({
+          link: element.link,
+          name: element.name,
+          icon: element.icon.mobile,
+          onClick: element.onClick,
+        }))}
+        anchor="left"
+        open={isMobileOpen}
         selectedItem={selectedTab}
-        onClose={handleMobileDrawerClose}
+        onClose={closeMobileDrawer}
       />
     </div>
   );
