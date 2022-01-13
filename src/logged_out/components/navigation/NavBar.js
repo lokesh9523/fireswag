@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -18,15 +18,110 @@ import HomeIcon from "@material-ui/icons/Home";
 // import BookIcon from "@material-ui/icons/Book";
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
+import SearchIcon from '@material-ui/icons/Search';
+import PhoenixLogo from "../../../assets/img/phoenix.svg";
+import Logo from "../../../assets/img/logoOrange.png";
+import NightMode from "../../../assets/img/nightMode.svg";
 
 const styles = theme => ({
   appBar: {
-    boxShadow: theme.shadows[6],
-    backgroundColor: theme.palette.common.white
+    boxShadow: '0px 1px 6px 0px #17bb43ad',
+    backgroundColor: theme.palette.common.white,
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      marginLeft: 0,
+    },
   },
   toolbar: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  phoenixLogo:{
+    height: 36
+  },
+  searchbox: {
+    position: 'relative',
+    minWidth: '40px',
+    width: '0%',
+    height: '40px',
+    float: 'right',
+    overflow: 'hidden',
+    transition: 'width 0.3s'
+  },
+  searchboxInput: {
+    top: 10,
+    left: "5%",
+    width: "25%",
+    border: "1px solid #707070",
+    height: 40,
+    margin: 0,
+    outline: 0,
+    padding: "0px 5px 0px 44px",
+    position: "absolute",
+    fontSize: 18,
+    borderRadius: 4
+  },
+  searchboxSubmit: {
+    width: '40px',
+    height: '40px',
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    fontFamily: 'Montserrat',
+    fontSize: '22px',
+    left: 12,
+    padding: 0,
+    margin: 0,
+    border: 0,
+    outline: 0,
+    lineHeight: '50px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    color: '#FFFFFF',
+    background: '#fff',
+    zIndex: -1
+  },
+  searchboxIcon: {
+    top: 11,
+    left: "5.2%",
+    color: "#707070",
+    width: 40,
+    cursor: "pointer",
+    height: 36,
+    margin: 0,
+    display: "block",
+    outline: 0,
+    padding: 0,
+    position: "absolute",
+    background: "#fff",
+    textAlign: "center",
+    fontFamily: "Montserrat",
+    lineHeight: 0,
+  },
+  searchIcon: {
+    fontSize: '1.5rem',
+    marginTop: 8,
+    marginLeft: 2,
+    color: theme.palette.blueDark
+  },
+  logo: {
+    height: 100,
+    position: 'absolute',
+    left: '50%',
+    top: 10,
+    [theme.breakpoints.down("xs")]: {
+      height: 64,
+      left: '44%'
+    },
+  },
+  signIn: {
+    background:  "linear-gradient(to bottom, #106B36, #71BB43);",
+    padding: "8px 18px",
+    color: "#FFFFFF",
+  },
+  nightMode: {
+    height: 36,
   },
   menuButtonText: {
     fontSize: theme.typography.body1.fontSize,
@@ -75,6 +170,25 @@ function NavBar(props) {
     // }
   ];
   const [count, setCount] = useState(0);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
+
+  const openMobileDrawer = useCallback(() => {
+    setIsMobileOpen(true);
+  }, [setIsMobileOpen]);
+
+  const closeMobileDrawer = useCallback(() => {
+    setIsMobileOpen(false);
+  }, [setIsMobileOpen]);
+
+  const openDrawer = useCallback(() => {
+    setIsSideDrawerOpen(true);
+  }, [setIsSideDrawerOpen]);
+
+  const closeDrawer = useCallback(() => {
+    setIsSideDrawerOpen(false);
+  }, [setIsSideDrawerOpen]);
+
   useEffect(() => {
     setCount(cart.length)
   }, [cart])
@@ -82,23 +196,25 @@ function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
+            <img src={PhoenixLogo} className={classes.phoenixLogo} alt="Phoenix Icon" />
+            <Hidden smDown>
           <div>
-            <Typography
-              variant="h4"
-              className={classes.brandText}
-              display="inline"
-              color="primary"
-            >
-              Fires
-            </Typography>
-            <Typography
-              variant="h4"
-              className={classes.brandText}
-              display="inline"
-              color="secondary"
-            >
-              Wag
-            </Typography>
+          <input
+          type="search"
+          placeholder="Search for collection or items"
+          name="search"
+          className={classes.searchboxInput}
+          required
+          onChange={props.onChange}
+        />
+        <span
+          className={classes.searchboxIcon}>
+          <SearchIcon className={classes.searchIcon} />
+        </span>
+          </div>
+          </Hidden>
+          <div>
+            <img src={Logo} className={classes.logo} alt="Logo" />
           </div>
           <div>
             <Hidden mdUp>
@@ -143,16 +259,27 @@ function NavBar(props) {
                   </Button>
                 );
               })}
+              <Button className={classes.signIn}>
+                Sign In
+              </Button>
+              <Button>
+                <img src = {NightMode} className={classes.nightMode} alt="Night Mode" />
+              </Button>
             </Hidden>
           </div>
         </Toolbar>
       </AppBar>
       <NavigationDrawer
-        menuItems={menuItems}
-        anchor="right"
-        open={mobileDrawerOpen}
+        menuItems={menuItems.map((element) => ({
+          link: element.link,
+          name: element.name,
+          icon: element.icon.mobile,
+          onClick: element.onClick,
+        }))}
+        anchor="left"
+        open={isMobileOpen}
         selectedItem={selectedTab}
-        onClose={handleMobileDrawerClose}
+        onClose={closeMobileDrawer}
       />
     </div>
   );
