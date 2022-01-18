@@ -52,7 +52,7 @@ const styles = theme => ({
     }
   },
   products: {
-    width: "40%",
+    width: "30%",
     height: 100,
     display: "flex",
     position: "absolute",
@@ -65,7 +65,7 @@ const styles = theme => ({
     flexDirection: "row",
     justifyContent: "flex-end",
     backgroundColor: "#fff",
-    left: "56%",
+    left: "65%",
     borderBottomLeftRadius: 1000,
     borderBottomRightRadius: 1000,
     [theme.breakpoints.down("xs")]: {
@@ -87,12 +87,16 @@ const styles = theme => ({
 
     },
 
+    productsDark: {
+      backgroundColor: "#121212",
+    },
+
 
   },
   productClass: {
     marginInline: "1.25em",
     position: "relative",
-    left: "-25%",
+    left: "-17.5%",
     [theme.breakpoints.down("xs")]: {
       left: "0",
     }

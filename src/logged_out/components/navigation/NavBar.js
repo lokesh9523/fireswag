@@ -33,6 +33,10 @@ const styles = theme => ({
       marginLeft: 0,
     },
   },
+  appBarDark: {
+    backgroundColor: "#121212",
+    boxShadow: '0px 1px 6px 0px #17bb43ad',
+  },
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
@@ -54,7 +58,7 @@ const styles = theme => ({
     top: 10,
     left: "5%",
     width: "25%",
-    border: "1px solid #707070",
+    border: "1px solid #17bb43ad",
     height: 40,
     margin: 0,
     outline: 0,
@@ -63,6 +67,24 @@ const styles = theme => ({
     fontSize: 18,
     borderRadius: 4
   },
+
+  searchboxInputDark: {
+    top: 10,
+    left: "5%",
+    width: "25%",
+    border: "1px solid #17bb43ad",
+    height: 40,
+    margin: 0,
+    outline: 0,
+    padding: "0px 5px 0px 44px",
+    position: "absolute",
+    backgroundColor: "#121212",
+    color:"#71BB43",
+    fontSize: 18,
+    borderRadius: 4
+  },
+
+  
   searchboxSubmit: {
     width: '40px',
     height: '40px',
@@ -83,10 +105,33 @@ const styles = theme => ({
     background: '#fff',
     zIndex: -1
   },
+
+  searchboxSubmitDark: {
+    width: '40px',
+    height: '40px',
+    display: 'block',
+    position: 'absolute',
+    top: 0,
+    fontFamily: 'Montserrat',
+    fontSize: '22px',
+    left: 12,
+    padding: 0,
+    margin: 0,
+    border: 0,
+    outline: 0,
+    lineHeight: '50px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    color: '#FFFFFF',
+    background: "#121212",
+    zIndex: -1
+  },
+
+
   searchboxIcon: {
     top: 11,
     left: "5.2%",
-    color: "#707070",
+    color: "#71BB43",
     width: 40,
     cursor: "pointer",
     height: 36,
@@ -100,11 +145,40 @@ const styles = theme => ({
     fontFamily: "Montserrat",
     lineHeight: 0,
   },
+
+  searchboxIconDark: {
+    top: 11,
+    left: "5.2%",
+    color: "#71BB43",
+    width: 40,
+    cursor: "pointer",
+    height: 36,
+    margin: 0,
+    display: "block",
+    outline: 0,
+    padding: 0,
+    position: "absolute",
+    background: "#121212",
+    textAlign: "center",
+    fontFamily: "Montserrat",
+    lineHeight: 0,
+  },
   searchIcon: {
     fontSize: '1.5rem',
     marginTop: 8,
     marginLeft: 2,
-    color: theme.palette.blueDark
+    color: "#71BB43"
+  },
+
+
+
+
+  
+  searchIcondark: {
+    fontSize: '1.5rem',
+    marginTop: 8,
+    marginLeft: 2,
+    color: "#71BB43"
   },
   logo: {
     height: 100,
@@ -129,6 +203,10 @@ const styles = theme => ({
     fontWeight: theme.typography.h6.fontWeight,
     color: 'green'
   },
+
+  menuButtonTextDark: {
+    color: '#71BB43'
+  },
   brandText: {
     fontFamily: "'Baloo Bhaijaan', cursive",
     fontWeight: 400
@@ -136,6 +214,10 @@ const styles = theme => ({
   noDecoration: {
     textDecoration: "none !important",
     color: 'green'
+  },
+
+  noDecorationDark: {
+    color: '#71BB43'
   }
 });
 

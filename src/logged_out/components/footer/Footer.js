@@ -50,8 +50,12 @@ const styles = theme => ({
     //   paddingBottom: theme.spacing(10)
     // }
   },
+
+  backgroundDark: {
+    backgroundColor: "#121212"
+  },
   gridColumn: {
-    height: 90,
+    height: 64,
     display: 'inline-block',
     marginInline: 16,
   },
