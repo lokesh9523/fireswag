@@ -16,26 +16,44 @@ import MailIcon from "@material-ui/icons/Mail";
 import WaveBorder from "../../../shared/components/WaveBorder";
 import transitions from "@material-ui/core/styles/transitions";
 import ColoredButton from "../../../shared/components/ColoredButton";
+import LogoBlue from "../../../assets/img/logoBlue.png";
+import LogoGreen from "../../../assets/img/logoGreen.png";
+import LogoOrange from "../../../assets/img/logoOrange.png";
 
 const styles = theme => ({
   footerInner: {
-    backgroundColor: theme.palette.common.darkBlack,
-    paddingTop: theme.spacing(8),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingBottom: theme.spacing(6),
-    [theme.breakpoints.up("sm")]: {
-      paddingTop: theme.spacing(10),
-      paddingLeft: theme.spacing(16),
-      paddingRight: theme.spacing(16),
-      paddingBottom: theme.spacing(10)
-    },
-    [theme.breakpoints.up("md")]: {
-      paddingTop: theme.spacing(10),
-      paddingLeft: theme.spacing(10),
-      paddingRight: theme.spacing(10),
-      paddingBottom: theme.spacing(10)
-    }
+    backgroundColor: "#EAFFFC",
+    top:'auto',
+    bottom:0,
+    display: 'flex',
+    alignItems:'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    position:'absolute',
+    height:'100px',
+    width:'100%',
+    bottom: 0,
+    // paddingTop: theme.spacing(8),
+    // paddingLeft: theme.spacing(2),
+    // paddingRight: theme.spacing(2),
+    // paddingBottom: theme.spacing(6),
+    // [theme.breakpoints.up("sm")]: {
+    //   paddingTop: theme.spacing(10),
+    //   paddingLeft: theme.spacing(16),
+    //   paddingRight: theme.spacing(16),
+    //   paddingBottom: theme.spacing(10)
+    // },
+    // [theme.breakpoints.up("md")]: {
+    //   paddingTop: theme.spacing(10),
+    //   paddingLeft: theme.spacing(10),
+    //   paddingRight: theme.spacing(10),
+    //   paddingBottom: theme.spacing(10)
+    // }
+  },
+  gridColumn: {
+    height: 90,
+    display: 'inline-block',
+    marginInline: 16,
   },
   brandText: {
     fontFamily: "'Baloo Bhaijaan', cursive",
@@ -163,87 +181,13 @@ function Footer(props) {
         animationNegativeDelay={4}
       /> */}
       <div className={classes.footerInner}>
-        <Grid container spacing={isWidthUp("md", width) ? 10 : 5}>
-          <Grid item xs={12} md={6} lg={4}>
-            <form>
-              <Box display="flex" flexDirection="column">
-                <Box mb={1}>
-                  <TextField
-                    variant="outlined"
-                    multiline
-                    placeholder="Get in touch with us"
-                    inputProps={{ "aria-label": "Get in Touch" }}
-                    InputProps={{
-                      className: classes.whiteBg
-                    }}
-                    rows={4}
-                    fullWidth
-                    required
-                  />
-                </Box>
-                <ColoredButton
-                  color={theme.palette.common.white}
-                  variant="outlined"
-                  type="submit"
-                >
-                  Send Message
-                </ColoredButton>
-              </Box>
-            </form>
-          </Grid>
-          <Hidden mdDown>
-            <Grid item xs={12} md={6} lg={4}>
-              <Box display="flex" justifyContent="center">
-                <div>
-                  {infos.map((info, index) => (
-                    <Box display="flex" mb={1} key={index}>
-                      <Box mr={2}>
-                        <IconButton
-                          className={classes.infoIcon}
-                          tabIndex={-1}
-                          disabled
-                        >
-                          {info.icon}
-                        </IconButton>
-                      </Box>
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="center"
-                      >
-                        <Typography variant="h6" className="text-white">
-                          {info.description}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  ))}
-                </div>
-              </Box>
-            </Grid>
-          </Hidden>
-          <Grid item xs={12} md={6} lg={4}>
-            <Typography variant="h6" paragraph className="text-white">
-              About the Company
-            </Typography>
-            <Typography style={{ color: "#8f9296" }} paragraph>
-              Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce
-              euismod convallis velit, eu auctor lacus vehicula sit amet.
-            </Typography>
-            <Box display="flex">
-              {socialIcons.map((socialIcon, index) => (
-                <Box key={index} mr={index !== socialIcons.length - 1 ? 1 : 0}>
-                  <IconButton
-                    aria-label={socialIcon.label}
-                    className={classes.socialIcon}
-                    href={socialIcon.href}
-                  >
-                    {socialIcon.icon}
-                  </IconButton>
-                </Box>
-              ))}
-            </Box>
-          </Grid>
-        </Grid>
+        <div>
+          <img src= {LogoBlue} alt="firesea"  className={classes.gridColumn}/>
+
+          <img src= {LogoGreen} alt="firesea"  className={classes.gridColumn}/>
+
+          <img src= {LogoOrange} alt="firesea"  className={classes.gridColumn}/>
+        </div>
       </div>
     </footer>
   );
