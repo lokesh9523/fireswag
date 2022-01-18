@@ -140,7 +140,7 @@ const styles = theme => ({
     outline: 0,
     padding: 0,
     position: "absolute",
-    background: "#121212",
+    background: "#fff",
     textAlign: "center",
     fontFamily: "Montserrat",
     lineHeight: 0,

@@ -22,7 +22,7 @@ import LogoOrange from "../../../assets/img/logoOrange.png";
 
 const styles = theme => ({
   footerInner: {
-    backgroundColor: "#121212",
+    backgroundColor: "#EAFFFC",
     top:'auto',
     bottom:0,
     display: 'flex',
