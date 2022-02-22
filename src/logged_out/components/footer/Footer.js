@@ -29,10 +29,9 @@ const styles = theme => ({
     alignItems:'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    position:'absolute',
     height:'100px',
     width:'100%',
-    bottom: 0,
+    marginTop: '50px'
     // paddingTop: theme.spacing(8),
     // paddingLeft: theme.spacing(2),
     // paddingRight: theme.spacing(2),
@@ -90,6 +89,10 @@ const styles = theme => ({
   },
   whiteBg: {
     backgroundColor: theme.palette.common.white
+  },
+  mainFooter:{
+    float:'left',
+    width: '100%'
   }
 });
 
@@ -174,7 +177,7 @@ const socialIcons = [
 function Footer(props) {
   const { classes, theme, width } = props;
   return (
-    <footer className="lg-p-top">
+    <footer className={classes.mainFooter}>
       {/* <WaveBorder
         upperColor="#FFFFFF"
         lowerColor={theme.palette.common.darkBlack}

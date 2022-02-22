@@ -67,7 +67,7 @@ const styles = (theme) => ({
   wrapper: {
     position: "relative",
     // backgroundColor: theme.palette.secondary.main,
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(0),
   },
   image: {
     maxWidth: "100%",
@@ -77,7 +77,7 @@ const styles = (theme) => ({
   },
   container: {
     marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(12),
+    marginBottom: theme.spacing(0),
     [theme.breakpoints.down("md")]: {
       marginBottom: theme.spacing(9),
     },
