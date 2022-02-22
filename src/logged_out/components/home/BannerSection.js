@@ -73,7 +73,7 @@ const BannerSection = () => {
       <div className={`${classes.root} ${classes.IndexProductsMenuArea}`}>
           <ButtonGroup disableElevation variant="outlined" aria-label="outlined button group">
             <Button className={selectedBtn === 1 ? `${classes.selecedBtnStyle} ${classes.buttonLeft}` : `${classes.nonSelecedBtnStyle} ${classes.buttonLeft}`} onClick={()=>setSelectedBtn(1)}>Hats</Button>
-            <Button className={selectedBtn === 2 ? classes.selecedBtnStyle : classes.nonSelecedBtnStyle} onClick={()=>setSelectedBtn(2)}>Shirs</Button>
+            <Button className={selectedBtn === 2 ? classes.selecedBtnStyle : classes.nonSelecedBtnStyle} onClick={()=>setSelectedBtn(2)}>Shirts</Button>
             <Button className={selectedBtn === 3 ? classes.selecedBtnStyle : classes.nonSelecedBtnStyle} onClick={()=>setSelectedBtn(3)}>Hoodies</Button>
             <Button className={selectedBtn === 4 ? classes.selecedBtnStyle : classes.nonSelecedBtnStyle} onClick={()=>setSelectedBtn(4)}>Drinkware</Button>
             <Button className={selectedBtn === 5 ? `${classes.selecedBtnStyle} ${classes.buttonRight}` : `${classes.nonSelecedBtnStyle} ${classes.buttonRight}`} onClick={()=>setSelectedBtn(5)}>Stickers</Button>
