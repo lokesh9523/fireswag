@@ -176,6 +176,7 @@ const socialIcons = [
 
 function Footer(props) {
   const { classes, theme, width } = props;
+
   return (
     <footer className={classes.mainFooter}>
       {/* <WaveBorder
@@ -185,11 +186,11 @@ function Footer(props) {
       /> */}
       <div className={classes.footerInner}>
         <div>
-          <img src= {LogoBlue} alt="firesea"  className={classes.gridColumn}/>
+        <a href="http://firesea.blocmatrix.com/" target="_blank"  rel="noreferrer"><img src= {LogoBlue} alt="firesea"  className={classes.gridColumn}/></a>
 
-          <img src= {LogoGreen} alt="firesea"  className={classes.gridColumn}/>
+        <a href="https://fireswag.org/"><img src= {LogoGreen} alt="firesea"  className={classes.gridColumn}/></a>
 
-          <img src= {LogoOrange} alt="firesea"  className={classes.gridColumn}/>
+        <a href="https://fireswap.org/" target="_blank" rel="noreferrer"><img src= {LogoOrange} alt="firesea"  className={classes.gridColumn}/></a>
         </div>
       </div>
     </footer>
