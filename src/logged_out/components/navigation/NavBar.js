@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useCallback } from "react";
+import React, { memo, useEffect, useState, useCallback, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -23,6 +23,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import PhoenixLogo from "../../../assets/img/phoenix.svg";
 import Logo from "../../../assets/img/logoGreen.png";
 import NightMode from "../../../assets/img/nightMode.svg";
+import { ThemeSelectorContext } from "../../../Themes";
 
 const styles = theme => ({
   appBar: {
@@ -140,6 +141,7 @@ const styles = theme => ({
 });
 
 function NavBar(props) {
+  const { themeName, toggleTheme } = useContext(ThemeSelectorContext);
   const {
     classes,
     openRegisterDialog,
@@ -161,20 +163,21 @@ function NavBar(props) {
       name: "cart",
       icon: <ShoppingCartIcon />
     },
-    {
-      link: "",
-      name: "Sign In"
-    }
+    // {
+    //   link: "",
+    //   name: "Sign In"
+    //   //onClick: openLoginDialog
+    // },
     // {
     //   name: "Register",
     //   onClick: openRegisterDialog,
-    //   icon: <HowToRegIcon className="text-white" />
+    //   //icon: <HowToRegIcon className="text-white" />
     // },
-    // {
-    //   name: "Login",
-    //   onClick: openLoginDialog,
-    //   icon: <LockOpenIcon className="text-white" />
-    // }
+    {
+      name: "Login",
+      //onClick: openLoginDialog,
+      //icon: <LockOpenIcon className="text-white" />
+    }
   ];
   const [count, setCount] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -269,7 +272,7 @@ function NavBar(props) {
               {/* <Button className={classes.signIn}>
                 Sign In
               </Button> */}
-              <Button>
+              <Button onClick={toggleTheme}>
                 <img src={NightMode} className={classes.nightMode} alt="Night Mode" />
               </Button>
             </Hidden>

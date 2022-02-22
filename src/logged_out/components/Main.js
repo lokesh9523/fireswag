@@ -100,6 +100,7 @@ function Main(props) {
 
   useEffect(fetchBlogPosts, [fetchBlogPosts]);
   return (
+    <>
     <div className={classes.wrapper}>
       {!isCookieRulesDialogOpen && (
         <CookieConsent
@@ -139,6 +140,7 @@ function Main(props) {
       />
       <Footer />
     </div>
+    </>
   );
 }
 
