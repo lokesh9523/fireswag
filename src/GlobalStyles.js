@@ -23,6 +23,9 @@ const styles = theme => ({
         paddingLeft: `${theme.spacing(1)}px !important`
       }
     },
+    "body":{
+      margin:'0px'
+    },
     ".container": {
       width: "100%",
       paddingRight: theme.spacing(4),
@@ -39,6 +42,11 @@ const styles = theme => ({
         maxWidth: 1170
       }
     },
+    ".main-papar":{
+      margin:'0px !important',
+      padding: '0px !important',
+      borderRadius: '0px !important'
+    },  
     ".row": {
       display: "flex",
       flexWrap: "wrap",

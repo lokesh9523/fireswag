@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import AOS from "aos/dist/aos";
-import { withStyles } from "@material-ui/core";
+import { Typography, withStyles } from "@material-ui/core";
 import NavBar from "./navigation/NavBar";
 import Footer from "./footer/Footer";
 import "aos/dist/aos.css";
@@ -16,8 +16,8 @@ AOS.init({ once: true });
 
 const styles = (theme) => ({
   wrapper: {
-    backgroundColor: theme.palette.common.white,
-    overflowX: "hidden",
+    //backgroundColor: theme.palette.common.white,
+    //overflowX: "hidden",
   },
 });
 
@@ -100,7 +100,7 @@ function Main(props) {
 
   useEffect(fetchBlogPosts, [fetchBlogPosts]);
   return (
-    <>
+  
     <div className={classes.wrapper}>
       {!isCookieRulesDialogOpen && (
         <CookieConsent
@@ -129,6 +129,7 @@ function Main(props) {
         handleMobileDrawerClose={handleMobileDrawerClose}
         cart={cart}
       />
+      
       <Routing
         blogPosts={blogPosts}
         selectHome={selectHome}
@@ -140,7 +141,7 @@ function Main(props) {
       />
       <Footer />
     </div>
-    </>
+
   );
 }
 
