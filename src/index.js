@@ -4,17 +4,11 @@ import App from './App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import { Provider } from 'react-redux'
 import store from './../src/redux/store'
-import Theme from './Themes'
 
 ReactDOM.render(
-  
-    <Provider store={store}>
-      <Theme>
-      <App />
-      </Theme>
-    </Provider>
-  ,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root'),
 )
-
 serviceWorkerRegistration.register()
