@@ -27,6 +27,7 @@ import { connect, useDispatch } from 'react-redux'
 import { setThemeDark, setThemeLight } from '../../../redux/actions/theme'
 import myTheme from '../../../theme'
 import typography from '../../../theme/typography'
+import clsx from 'clsx'
 
 const styles = (theme) => ({
   appBar: {
@@ -209,7 +210,6 @@ function NavBar(props) {
   }, [cart, themeSetting])
 
   const handleClick = (value) => {
-    //sconsole.log(value)
     localStorage.setItem('theme', value)
     if (value === false) {
       dispatch(setThemeDark())
@@ -224,7 +224,7 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={ currentTheme === true ? `${classes.appBar} ${classes.appBarNight}` : `${classes.appBar} ${classes.appBarDay}` }>
+      <AppBar position="fixed" className={ currentTheme === true ? clsx(classes.appBar, classes.appBarNight) : clsx(classes.appBar,classes.appBarDay) }>
         <Toolbar className={classes.toolbar}>
           <Link to={'/'}>
             <img
