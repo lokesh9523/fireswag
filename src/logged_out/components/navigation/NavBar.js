@@ -3,14 +3,12 @@ import React, {
   useEffect,
   useState,
   useCallback,
-  //useContext,
 } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import {
   AppBar,
   Toolbar,
-  //Typography,
   Button,
   Hidden,
   IconButton,
@@ -18,34 +16,23 @@ import {
   Badge,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-//import HomeIcon from '@material-ui/icons/Home'
-//import ShoppingCartIcon from '@material-ui/icons//ShoppingCart'
-//import ShoppingCartIcon from '../../../assets/img/svg/cart-icon.svg'
 import CartIcon from '../../../assets/img/svg/cart-icon.svg'
-// import HowToRegIcon from "@material-ui/icons/HowToReg";
-// import LockOpenIcon from "@material-ui/icons/LockOpen";
-// import BookIcon from "@material-ui/icons/Book";
-// import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import NavigationDrawer from '../../../shared/components/NavigationDrawer'
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '../../../assets/img/svg/search-icon.svg'
 import PhoenixLogo from '../../../assets/img/phoenix.svg'
 import Logo from '../../../assets/img/logoGreen.png'
 import NightMode from '../../../assets/img/nightMode.svg'
 import LightMode from '../../../assets/img/lightMode.svg'
 import { connect, useDispatch } from 'react-redux'
 import { setThemeDark, setThemeLight } from '../../../redux/actions/theme'
-//import { ContactlessOutlined } from '@material-ui/icons'
-//import DayTheme from '../../../DayTheme'
-//import NightTheme from '../../../NighTheme'
 import myTheme from '../../../theme'
 import typography from '../../../theme/typography'
+
 const styles = (theme) => ({
   appBar: {
-    //boxShadow: '0px 1px 6px 0px #17bb43ad',
-    //backgroundColor: theme.palette.warning.light,
     [theme.breakpoints.down('xs')]: {
-      width: '100%',
-      marginLeft: 0,
+      width: myTheme.widthPercentage.width100,
+      marginLeft: myTheme.margin.marginLeft0px,
     },
   },
   appBarDay: {
@@ -57,52 +44,27 @@ const styles = (theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: myTheme.align.alignCenter,
   },
   phoenixLogo: {
     height: 36,
-  },
-  searchbox: {
-    position: 'relative',
-    minWidth: '40px',
-    width: '0%',
-    height: '40px',
-    float: 'right',
-    overflow: 'hidden',
-    transition: 'width 0.3s',
+    cursor: 'pointer'
   },
   searchboxInput: {
     top: 10,
     left: '5%',
-    width: '25%',
-    border: `1px solid ${myTheme.border.borderColor}`,
+    width: '40%',
+    border: `1px solid ${myTheme.border.searchBorder}`,
     height: 40,
     margin: 0,
+    color: myTheme.border.borderColor,
     outline: 0,
     padding: '0px 5px 0px 44px',
     position: 'absolute',
+    fontWeight: 300,
     fontSize: 18,
-    borderRadius: 4,
-  },
-  searchboxSubmit: {
-    width: '40px',
-    height: '40px',
-    display: 'block',
-    position: 'absolute',
-    top: 0,
-    fontFamily: 'Montserrat',
-    fontSize: '22px',
-    left: 12,
-    padding: 0,
-    margin: 0,
-    border: 0,
-    outline: 0,
-    lineHeight: '50px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    color: '#FFFFFF',
-    background: '#fff',
-    zIndex: -1,
+    borderRadius: 10,
+    backgroundColor: 'transparent'
   },
   searchboxIcon: {
     top: 11,
@@ -116,16 +78,13 @@ const styles = (theme) => ({
     outline: 0,
     padding: 0,
     position: 'absolute',
-    background: '#fff',
     textAlign: 'center',
     fontFamily: 'Montserrat',
     lineHeight: 0,
   },
   searchIcon: {
-    fontSize: '1.5rem',
     marginTop: 8,
     marginLeft: 2,
-    color: theme.palette.blueDark,
   },
   logo: {
     height: 100,
@@ -143,13 +102,13 @@ const styles = (theme) => ({
     color: '#FFFFFF',
   },
   nightMode: {
-    height: 36,
+    height: 44,
   },
   nightModeBtn:{
     padding: '0px',
     margin: '0px',
-    width: '30px !important',
-    height: '30px',
+    width: '44px !important',
+    height: '44px',
     '&:hover':{
       backgroundColor: 'transparent !important'
     }
@@ -159,19 +118,31 @@ const styles = (theme) => ({
     fontWeight: theme.typography.h6.fontWeight,
     textTransform: typography.textTransformNone.textTransform,
     color: myTheme.palette.common.green,
+    '&:hover':{
+      backgroundColor: 'transparent'
+    }
   },
-  brandText: {
-    fontFamily: "'Baloo Bhaijaan', cursive",
-    fontWeight: 400,
+  signInBtn:{
+    borderRadius:' 15px',
+    marginLeft: '25px',
+    marginRight: '25px',
+    paddingLeft: '35px',
+    paddingRight: '35px',
+    background: myTheme.gradient.greenGradient,
+    color: myTheme.palette.common.white
   },
   noDecoration: {
     textDecoration: 'none !important',
-    color: 'green',
+    color: 'green'
   },
+  cartIconStyle:{
+    width: '40px'
+  }
 })
 
 function NavBar(props) {
   const dispatch = useDispatch()
+
   const {
     classes,
     openRegisterDialog,
@@ -194,23 +165,23 @@ function NavBar(props) {
     {
       link: '/cart',
       //name: 'cart',
-      icon: <img src={CartIcon} alt="" />,
+      icon: <img src={CartIcon} alt="" className={classes.cartIconStyle} />,
     },
-    // {
-    //   link: "",
-    //   name: "Sign In"
-    //   //onClick: openLoginDialog
-    // },
+    {
+      //link: "",
+      name: "Sign In",
+      //onClick: openLoginDialog
+    },
     // {
     //   name: "Register",
     //   onClick: openRegisterDialog,
     //   //icon: <HowToRegIcon className="text-white" />
     // },
-    {
-      name: 'Sign In',
-      //onClick: openLoginDialog,
-      //icon: <LockOpenIcon className="text-white" />
-    },
+    // {
+    //   name: 'Sign In',
+    //   onClick: openLoginDialog,
+    //   icon: <LockOpenIcon className="text-white" />
+    // },
   ]
   const [count, setCount] = useState(0)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
@@ -255,11 +226,14 @@ function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed" className={ currentTheme === true ? `${classes.appBar} ${classes.appBarNight}` : `${classes.appBar} ${classes.appBarDay}` }>
         <Toolbar className={classes.toolbar}>
-          <img
-            src={PhoenixLogo}
-            className={classes.phoenixLogo}
-            alt="Phoenix Icon"
-          />
+          <Link to={'/'}>
+            <img
+              src={PhoenixLogo}
+              className={classes.phoenixLogo}
+              alt="Phoenix Icon"
+              to={'/'}
+            />
+          </Link>
           <Hidden smDown>
             <div>
               <input
@@ -271,12 +245,14 @@ function NavBar(props) {
                 onChange={props.onChange}
               />
               <span className={classes.searchboxIcon}>
-                <SearchIcon className={classes.searchIcon} />
+                <img src={SearchIcon} className={classes.searchIcon} alt="" />
               </span>
             </div>
           </Hidden>
           <div>
-            <img src={Logo} className={classes.logo} alt="Logo" />
+            <Link to={'/'}>
+              <img src={Logo} className={classes.logo} alt="Logo"/>
+            </Link>
           </div>
           <div>
             <Hidden mdUp>
@@ -320,7 +296,7 @@ function NavBar(props) {
                     color="secondary"
                     size="large"
                     onClick={element.onClick}
-                    classes={{ text: classes.menuButtonText }}
+                    classes={{ text: `${classes.menuButtonText} ${classes.signInBtn}` }}
                     key={element.name}
                   >
                     {element.name}
