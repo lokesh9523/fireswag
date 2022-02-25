@@ -14,10 +14,24 @@ const warningLight = 'rgba(253, 200, 69, .3)'
 const warningMain = 'rgba(253, 200, 69, .5)'
 const warningDark = 'rgba(253, 200, 69, .7)'
 
-// border
+//align
+const alignLeft = 'left'
+const alignRight = 'right'
+const alignCenter = 'center'
+
+//border
 const borderWidth = 2
-const borderColor = 'rgba(0, 0, 0, 0.13)'
+const borderColor = '#707070'
 const searchBorder = '#707070'
+
+//gradient
+const greenGradient = 'linear-gradient(180deg, rgba(16,107,54,1) 0%, rgba(113,188,67,1) 100%)'
+
+// width
+const width100 = '100%'
+
+//margin
+const marginLeft0px = '0px'
 
 // breakpoints
 const xl = 1920
@@ -73,6 +87,7 @@ const theme = createTheme({
   border: {
     borderColor: borderColor,
     borderWidth: borderWidth,
+    searchBorder: searchBorder
   },
   overrides: {
     MuiExpansionPanel: {
@@ -132,6 +147,20 @@ const theme = createTheme({
   typography: {
     useNextVariants: true,
   },
+  gradient:{
+    greenGradient
+  },
+  align:{
+    alignLeft,
+    alignRight,
+    alignCenter
+  },
+  widthPercentage:{
+    width100
+  },
+  margin:{
+    marginLeft0px
+  }
 })
 
 export default theme

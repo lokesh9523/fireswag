@@ -16,7 +16,7 @@ function Home(props) {
       <HeadSection />
       <BannerSection />
       {/* <FeatureSection /> */}
-      <PricingSection />
+      {/* <PricingSection /> */}
       <SliderSection/>
     </Fragment>
   );
