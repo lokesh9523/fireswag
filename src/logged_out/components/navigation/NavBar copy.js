@@ -165,7 +165,7 @@ function NavBar(props) {
     },
     {
       link: '/cart',
-      name: 'cart',
+      //name: 'cart',
       icon: <img src={CartIcon} alt="" className={classes.cartIconStyle} />,
     },
     {
@@ -208,7 +208,6 @@ function NavBar(props) {
   useEffect(() => {
     setCount(cart.length)
     setShowThemeIcon(themeSetting.theme)
-    setCurrentTheme(themeSetting.theme)
   }, [cart, themeSetting])
 
   const handleClick = (value) => {

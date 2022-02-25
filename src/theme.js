@@ -24,7 +24,6 @@ const alignCenter = 'center'
 //border
 const borderWidth = 2
 const borderColor = '#707070'
-const searchBorder = '#707070'
 
 //gradient
 const greenGradient = 'linear-gradient(180deg, rgba(16,107,54,1) 0%, rgba(113,188,67,1) 100%)'
@@ -56,7 +55,6 @@ const theme = createTheme({
       white,
       green,
       colorDark,
-      searchBorder,
       footerBg,
       footerBga
     },
@@ -91,7 +89,6 @@ const theme = createTheme({
   border: {
     borderColor: borderColor,
     borderWidth: borderWidth,
-    searchBorder: searchBorder
   },
   overrides: {
     MuiExpansionPanel: {
