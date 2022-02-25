@@ -1,6 +1,6 @@
 import palette from './palette';
-import { createMuiTheme } from "@material-ui/core";
-const defaultTheme = createMuiTheme()
+import { createTheme } from "@material-ui/core";
+const defaultTheme = createTheme()
 const { breakpoints } = defaultTheme
 
 export default {
@@ -89,7 +89,7 @@ export default {
   },
   body1: {
     color: palette.text.primary,
-    fontSize: '14px',
+    fontSize: '20px',
     letterSpacing: '-0.05px',
     lineHeight: '21px'
   },
@@ -116,5 +116,8 @@ export default {
     letterSpacing: '0.33px',
     lineHeight: '13px',
     textTransform: 'uppercase'
+  },
+  textTransformNone: {
+    textTransform: 'none'
   }
 };

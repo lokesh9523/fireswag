@@ -3,14 +3,14 @@ import React, {
   useEffect,
   useState,
   useCallback,
-  useContext,
+  //useContext,
 } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import {
   AppBar,
   Toolbar,
-  Typography,
+  //Typography,
   Button,
   Hidden,
   IconButton,
@@ -18,8 +18,10 @@ import {
   Badge,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import HomeIcon from '@material-ui/icons/Home'
-import ShoppingCartIcon from '@material-ui/icons//ShoppingCart'
+//import HomeIcon from '@material-ui/icons/Home'
+//import ShoppingCartIcon from '@material-ui/icons//ShoppingCart'
+//import ShoppingCartIcon from '../../../assets/img/svg/cart-icon.svg'
+import CartIcon from '../../../assets/img/svg/cart-icon.svg'
 // import HowToRegIcon from "@material-ui/icons/HowToReg";
 // import LockOpenIcon from "@material-ui/icons/LockOpen";
 // import BookIcon from "@material-ui/icons/Book";
@@ -32,16 +34,25 @@ import NightMode from '../../../assets/img/nightMode.svg'
 import LightMode from '../../../assets/img/lightMode.svg'
 import { connect, useDispatch } from 'react-redux'
 import { setThemeDark, setThemeLight } from '../../../redux/actions/theme'
-import { ContactlessOutlined } from '@material-ui/icons'
+//import { ContactlessOutlined } from '@material-ui/icons'
+//import DayTheme from '../../../DayTheme'
+//import NightTheme from '../../../NighTheme'
+import myTheme from '../../../theme'
+import typography from '../../../theme/typography'
 const styles = (theme) => ({
   appBar: {
     //boxShadow: '0px 1px 6px 0px #17bb43ad',
-    //backgroundColor: theme.palette.common.white,
-    backgroundColor: 'transparent',
+    //backgroundColor: theme.palette.warning.light,
     [theme.breakpoints.down('xs')]: {
       width: '100%',
       marginLeft: 0,
     },
+  },
+  appBarDay: {
+    backgroundColor: myTheme.palette.common.colorDark,
+  },
+  appBarNight: {
+    backgroundColor: theme.palette.common.white,
   },
   toolbar: {
     display: 'flex',
@@ -64,7 +75,7 @@ const styles = (theme) => ({
     top: 10,
     left: '5%',
     width: '25%',
-    border: '1px solid #707070',
+    border: `1px solid ${myTheme.border.borderColor}`,
     height: 40,
     margin: 0,
     outline: 0,
@@ -144,9 +155,10 @@ const styles = (theme) => ({
     }
   },
   menuButtonText: {
-    fontSize: theme.typography.body1.fontSize,
+    fontSize: typography.body1.fontSize,
     fontWeight: theme.typography.h6.fontWeight,
-    color: 'green',
+    textTransform: typography.textTransformNone.textTransform,
+    color: myTheme.palette.common.green,
   },
   brandText: {
     fontFamily: "'Baloo Bhaijaan', cursive",
@@ -171,6 +183,8 @@ function NavBar(props) {
     cart,
     themeSetting,
   } = props
+  const [currentTheme,setCurrentTheme] = useState();
+
   const menuItems = [
     {
       link: '/',
@@ -179,8 +193,8 @@ function NavBar(props) {
     },
     {
       link: '/cart',
-      name: 'cart',
-      icon: <ShoppingCartIcon />,
+      //name: 'cart',
+      icon: <img src={CartIcon} alt="" />,
     },
     // {
     //   link: "",
@@ -193,7 +207,7 @@ function NavBar(props) {
     //   //icon: <HowToRegIcon className="text-white" />
     // },
     {
-      name: 'Login',
+      name: 'Sign In',
       //onClick: openLoginDialog,
       //icon: <LockOpenIcon className="text-white" />
     },
@@ -224,7 +238,7 @@ function NavBar(props) {
   }, [cart, themeSetting])
 
   const handleClick = (value) => {
-    console.log(value)
+    //sconsole.log(value)
     localStorage.setItem('theme', value)
     if (value === false) {
       dispatch(setThemeDark())
@@ -232,10 +246,14 @@ function NavBar(props) {
       dispatch(setThemeLight())
     }
   }
-console.log(themeSetting.theme)
+  
+  useEffect(()=>{
+    setCurrentTheme(themeSetting.theme)
+  },[themeSetting])
+
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={ currentTheme === true ? `${classes.appBar} ${classes.appBarNight}` : `${classes.appBar} ${classes.appBarDay}` }>
         <Toolbar className={classes.toolbar}>
           <img
             src={PhoenixLogo}

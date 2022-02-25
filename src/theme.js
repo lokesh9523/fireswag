@@ -1,39 +1,46 @@
-import { responsiveFontSizes } from "@material-ui/core";
-import { createTheme } from '@material-ui/core/styles';
-
+import { responsiveFontSizes } from '@material-ui/core'
+import { createTheme } from '@material-ui/core/styles'
 
 // colors
-const primary = "#b3294e";
-const secondary = "#4829B2";
-const black = "#343a40";
-const darkBlack = "rgb(36, 40, 44)";
-const background = "#f5f5f5";
-const warningLight = "rgba(253, 200, 69, .3)";
-const warningMain = "rgba(253, 200, 69, .5)";
-const warningDark = "rgba(253, 200, 69, .7)";
+const primary = '#b3294e'
+const secondary = '#4829B2'
+const black = '#343a40'
+const white = '#ffffff'
+const green = '#71BC43'
+const colorDark = '#121212'
+const darkBlack = 'rgb(36, 40, 44)'
+const background = '#f5f5f5'
+const warningLight = 'rgba(253, 200, 69, .3)'
+const warningMain = 'rgba(253, 200, 69, .5)'
+const warningDark = 'rgba(253, 200, 69, .7)'
 
 // border
-const borderWidth = 2;
-const borderColor = "rgba(0, 0, 0, 0.13)";
+const borderWidth = 2
+const borderColor = 'rgba(0, 0, 0, 0.13)'
+const searchBorder = '#707070'
 
 // breakpoints
-const xl = 1920;
-const lg = 1280;
-const md = 960;
-const sm = 600;
-const xs = 0;
+const xl = 1920
+const lg = 1280
+const md = 960
+const sm = 600
+const xs = 0
 
 // spacing
-const spacing = 8;
+const spacing = 8
 
 const theme = createTheme({
   palette: {
-    type: "light",
+    type: 'dark',
     primary: { main: primary },
     secondary: { main: secondary },
     common: {
       black,
-      darkBlack
+      darkBlack,
+      white,
+      green,
+      colorDark,
+      searchBorder
     },
     warning: {
       light: warningLight,
@@ -45,7 +52,7 @@ const theme = createTheme({
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset: 0.2,
     background: {
-      default: background
+      default: background,
     },
     spacing
   },
@@ -60,18 +67,18 @@ const theme = createTheme({
       lg,
       md,
       sm,
-      xs
-    }
+      xs,
+    },
   },
   border: {
     borderColor: borderColor,
-    borderWidth: borderWidth
+    borderWidth: borderWidth,
   },
   overrides: {
     MuiExpansionPanel: {
       root: {
-        position: "static"
-      }
+        position: 'static',
+      },
     },
     MuiTableCell: {
       root: {
@@ -80,51 +87,51 @@ const theme = createTheme({
         borderBottom: `${borderWidth}px solid ${borderColor}`,
         [`@media (max-width:  ${sm}px)`]: {
           paddingLeft: spacing,
-          paddingRight: spacing
-        }
-      }
+          paddingRight: spacing,
+        },
+      },
     },
     MuiDivider: {
       root: {
         backgroundColor: borderColor,
-        height: borderWidth
-      }
+        height: borderWidth,
+      },
     },
     MuiPrivateNotchedOutline: {
       root: {
-        borderWidth: borderWidth
-      }
+        borderWidth: borderWidth,
+      },
     },
     MuiListItem: {
       divider: {
-        borderBottom: `${borderWidth}px solid ${borderColor}`
-      }
+        borderBottom: `${borderWidth}px solid ${borderColor}`,
+      },
     },
     MuiDialog: {
       paper: {
-        width: "100%",
+        width: '100%',
         maxWidth: 430,
         marginLeft: spacing,
-        marginRight: spacing
-      }
+        marginRight: spacing,
+      },
     },
     MuiTooltip: {
       tooltip: {
-        backgroundColor: darkBlack
-      }
+        backgroundColor: darkBlack,
+      },
     },
     MuiExpansionPanelDetails: {
       root: {
         [`@media (max-width:  ${sm}px)`]: {
           paddingLeft: spacing,
-          paddingRight: spacing
-        }
-      }
-    }
+          paddingRight: spacing,
+        },
+      },
+    },
   },
   typography: {
-    useNextVariants: true
-  }
-});
+    useNextVariants: true,
+  },
+})
 
-export default theme;
+export default theme

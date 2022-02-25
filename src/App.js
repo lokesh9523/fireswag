@@ -1,7 +1,7 @@
 import React, { Fragment, Suspense, lazy, useEffect, useState } from 'react'
 import { ThemeProvider, CssBaseline, Paper } from '@material-ui/core'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-//import theme from './theme'
+import theme from './theme'
 import NightTheme from './NighTheme'
 import DayTheme from './DayTheme'
 import GlobalStyles from './GlobalStyles'
@@ -15,7 +15,6 @@ const LoggedOutComponent = lazy(() => import('./logged_out/components/Main'))
 function App(props) {
   const { themeSetting } = props;
   let [myTheme, setMyTheme] = useState()
-  console.log(themeSetting.theme)
   useEffect(()=>{
     setMyTheme(themeSetting.theme)
   },[themeSetting])
@@ -24,7 +23,7 @@ function App(props) {
     <BrowserRouter>
       <ThemeProvider theme={myTheme !== true ? NightTheme : DayTheme}>
         <Paper className="main-papar">
-          {/* <CssBaseline /> */}
+          <CssBaseline />
           <GlobalStyles />
           {/* <Pace color={theme.palette.primary.light} /> */}
           <Suspense fallback={<Fragment />}>

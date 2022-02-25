@@ -3,7 +3,7 @@ import * as appConstants from './../../constants/appConstants';
 
 
 
-export const apiUrl = `http://172.245.106.74:3001/api`;
+export const apiUrl = `https://api.fireswag.org/api`;
 
 const setToken = () => {
     axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.ADMIN_FS_TOKEN);
