@@ -1,13 +1,14 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles'
 import sliderImg from '../../../assets/img/hats.png'
-
+import myTheme from '../../../theme' 
 const useStyles = makeStyles((theme) => ({
     sliderArea:{
-      height: '390px',
-      backgroundColor: '#eee',
-      margin: '0% 200px',
+      margin: '0% 15%',
       marginTop: '25px',
+      border: `2px solid ${myTheme.border.borderColor}`,
+      marginBottom: '0px',
+      padding: '0px'
     },
     sliderImgWidth:{
         width: '100%'

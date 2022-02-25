@@ -1,28 +1,29 @@
-import React, {
-  memo,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import React, { memo, useEffect, useState, useCallback } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
+  Typography,
   Button,
   Hidden,
   IconButton,
   withStyles,
-  Badge,
-} from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
-import CartIcon from '../../../assets/img/svg/cart-icon.svg'
-import NavigationDrawer from '../../../shared/components/NavigationDrawer'
-import SearchIcon from '../../../assets/img/svg/search-icon.svg'
-import PhoenixLogo from '../../../assets/img/phoenix.svg'
-import Logo from '../../../assets/img/logoGreen.png'
+  Badge
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
+import ShoppingCartIcon from '@material-ui/icons//ShoppingCart';
+// import HowToRegIcon from "@material-ui/icons/HowToReg";
+// import LockOpenIcon from "@material-ui/icons/LockOpen";
+// import BookIcon from "@material-ui/icons/Book";
+// import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import NavigationDrawer from "../../../shared/components/NavigationDrawer";
+import SearchIcon from '@material-ui/icons/Search';
 import NightMode from '../../../assets/img/nightMode.svg'
 import LightMode from '../../../assets/img/lightMode.svg'
+import PhoenixLogo from "../../../assets/img/phoenix.svg";
+import Logo from "../../../assets/img/logoGreen.png";
 import { connect, useDispatch } from 'react-redux'
 import { setThemeDark, setThemeLight } from '../../../redux/actions/theme'
 import myTheme from '../../../theme'
@@ -140,10 +141,8 @@ const styles = (theme) => ({
     width: '40px'
   }
 })
-
 function NavBar(props) {
   const dispatch = useDispatch()
-
   const {
     classes,
     openRegisterDialog,
@@ -153,62 +152,59 @@ function NavBar(props) {
     mobileDrawerOpen,
     selectedTab,
     cart,
-    themeSetting,
-  } = props
-  const [currentTheme,setCurrentTheme] = useState();
-
+    themeSetting
+  } = props;
   const menuItems = [
     {
-      link: '/',
-      name: 'Home',
+      link: "/",
+      name: "Home",
       // icon: <HomeIcon />
     },
     {
-      link: '/cart',
-      name: 'cart',
-      icon: <img src={CartIcon} alt="" className={classes.cartIconStyle} />,
+      link: "/cart",
+      //name: "cart",
+      icon: <ShoppingCartIcon />
     },
     {
-      //link: "",
-      name: "Sign In",
-      //onClick: openLoginDialog
-    },
+      link: "",
+      name: "Sign In"
+    }
     // {
     //   name: "Register",
     //   onClick: openRegisterDialog,
-    //   //icon: <HowToRegIcon className="text-white" />
+    //   icon: <HowToRegIcon className="text-white" />
     // },
     // {
-    //   name: 'Sign In',
+    //   name: "Login",
     //   onClick: openLoginDialog,
     //   icon: <LockOpenIcon className="text-white" />
-    // },
-  ]
-  const [count, setCount] = useState(0)
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false)
+    // }
+  ];
+  const [count, setCount] = useState(0);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
 
   const openMobileDrawer = useCallback(() => {
-    setIsMobileOpen(true)
-  }, [setIsMobileOpen])
+    setIsMobileOpen(true);
+  }, [setIsMobileOpen]);
 
   const closeMobileDrawer = useCallback(() => {
-    setIsMobileOpen(false)
-  }, [setIsMobileOpen])
+    setIsMobileOpen(false);
+  }, [setIsMobileOpen]);
 
   const openDrawer = useCallback(() => {
-    setIsSideDrawerOpen(true)
-  }, [setIsSideDrawerOpen])
+    setIsSideDrawerOpen(true);
+  }, [setIsSideDrawerOpen]);
 
   const closeDrawer = useCallback(() => {
-    setIsSideDrawerOpen(false)
-  }, [setIsSideDrawerOpen])
+    setIsSideDrawerOpen(false);
+  }, [setIsSideDrawerOpen]);
+
   const [showThemeIcon, setShowThemeIcon] = useState(themeSetting.theme)
 
   useEffect(() => {
     setCount(cart.length)
     setShowThemeIcon(themeSetting.theme)
-    setCurrentTheme(themeSetting.theme)
   }, [cart, themeSetting])
 
   const handleClick = (value) => {
@@ -219,23 +215,11 @@ function NavBar(props) {
       dispatch(setThemeLight())
     }
   }
-  
-  // useEffect(()=>{
-  //   setCurrentTheme(themeSetting.theme)
-  // },[themeSetting])
-
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={ currentTheme === true ? clsx(classes.appBar, classes.appBarNight) : clsx(classes.appBar,classes.appBarDay) }>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <Link to={'/'}>
-            <img
-              src={PhoenixLogo}
-              className={classes.phoenixLogo}
-              alt="Phoenix Icon"
-              to={'/'}
-            />
-          </Link>
+          <img src={PhoenixLogo} className={classes.phoenixLogo} alt="Phoenix Icon" />
           <Hidden smDown>
             <div>
               <input
@@ -246,15 +230,14 @@ function NavBar(props) {
                 required
                 onChange={props.onChange}
               />
-              <span className={classes.searchboxIcon}>
-                <img src={SearchIcon} className={classes.searchIcon} alt="" />
+              <span
+                className={classes.searchboxIcon}>
+                <SearchIcon className={classes.searchIcon} />
               </span>
             </div>
           </Hidden>
           <div>
-            <Link to={'/'}>
-              <img src={Logo} className={classes.logo} alt="Logo"/>
-            </Link>
+            <img src={Logo} className={classes.logo} alt="Logo" />
           </div>
           <div>
             <Hidden mdUp>
@@ -267,7 +250,7 @@ function NavBar(props) {
               </IconButton>
             </Hidden>
             <Hidden smDown>
-              {menuItems.map((element) => {
+              {menuItems.map(element => {
                 if (element.link) {
                   return (
                     <Link
@@ -280,31 +263,24 @@ function NavBar(props) {
                         color="secondary"
                         size="large"
                         classes={{ text: classes.menuButtonText }}
-                      >
-                        {element.icon ? element.icon : ''}
-                        {element.name === 'cart' ? (
-                          <Badge badgeContent={count} color="primary">
-                            {element.name}
-                          </Badge>
-                        ) : (
-                          element.name 
-                        )}
-                        
+                      >{element.icon ? element.icon : ""}{element.name === 'cart' ? <Badge badgeContent={count} color="primary">{element.name}
+                      </Badge> : element.name}
+
                       </Button>
                     </Link>
-                  )
+                  );
                 }
                 return (
                   <Button
                     color="secondary"
                     size="large"
                     onClick={element.onClick}
-                    classes={{ text: `${classes.menuButtonText} ${classes.signInBtn}` }}
+                    classes={{ text: classes.menuButtonText }}
                     key={element.name}
                   >
                     {element.name}
                   </Button>
-                )
+                );
               })}
               {/* <Button className={classes.signIn}>
                 Sign In
@@ -342,13 +318,13 @@ function NavBar(props) {
         open={mobileDrawerOpen}
         selectedItem={selectedTab}
         onClose={handleMobileDrawerClose}
-        // anchor="left"
-        // open={isMobileOpen}
-        // selectedItem={selectedTab}
-        // onClose={closeMobileDrawer}
+      // anchor="left"
+      // open={isMobileOpen}
+      // selectedItem={selectedTab}
+      // onClose={closeMobileDrawer}
       />
-    </div>
-  )
+    </div >
+  );
 }
 
 NavBar.propTypes = {
