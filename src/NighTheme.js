@@ -1,9 +1,12 @@
 import React from "react";
 import { createTheme } from '@material-ui/core/styles';
+import theme from "./theme";
 
 const NightTheme = createTheme({
     palette: {
-        type: "dark"
+        appBarBg: { backgroungColor: '#222 !imporant' },
+        type: "dark",
+        
     }
 })
 
