@@ -7,8 +7,10 @@ const secondary = '#4829B2'
 const black = '#343a40'
 const white = '#ffffff'
 const green = '#71BC43'
+const red = '#ff0000'
 const colorDark = '#121212'
 const darkBlack = 'rgb(36, 40, 44)'
+const gray = '#999'
 const background = '#f5f5f5'
 const warningLight = 'rgba(253, 200, 69, .3)'
 const warningMain = 'rgba(253, 200, 69, .5)'
@@ -56,7 +58,9 @@ const theme = createTheme({
       green,
       colorDark,
       footerBg,
-      footerBga
+      footerBga,
+      gray,
+      red
     },
     warning: {
       light: warningLight,

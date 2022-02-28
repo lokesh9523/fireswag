@@ -1,9 +1,4 @@
-import React, {
-  memo,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react'
+import React, { memo, useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import {
@@ -28,6 +23,8 @@ import { setThemeDark, setThemeLight } from '../../../redux/actions/theme'
 import myTheme from '../../../theme'
 import typography from '../../../theme/typography'
 import clsx from 'clsx'
+import MaxWidthDialog from '../register_login/Child'
+import LoginPopup from '../register_login/LoginPopup'
 
 const styles = (theme) => ({
   appBar: {
@@ -49,7 +46,7 @@ const styles = (theme) => ({
   },
   phoenixLogo: {
     height: 36,
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   searchboxInput: {
     top: 10,
@@ -65,7 +62,7 @@ const styles = (theme) => ({
     fontWeight: 300,
     fontSize: 18,
     borderRadius: 10,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   searchboxIcon: {
     top: 11,
@@ -105,44 +102,43 @@ const styles = (theme) => ({
   nightMode: {
     height: 44,
   },
-  nightModeBtn:{
+  nightModeBtn: {
     padding: '0px',
     margin: '0px',
     width: '44px !important',
     height: '44px',
-    '&:hover':{
-      backgroundColor: 'transparent !important'
-    }
+    marginTop: '8px',
+    '&:hover': {
+      backgroundColor: 'transparent !important',
+    },
   },
   menuButtonText: {
+    float: 'left',
+    marginTop: '5px',
     fontSize: typography.body1.fontSize,
     fontWeight: theme.typography.h6.fontWeight,
     textTransform: typography.textTransformNone.textTransform,
     color: myTheme.palette.common.green,
-    '&:hover':{
-      backgroundColor: 'transparent'
-    }
-  },
-  signInBtn:{
-    borderRadius:' 15px',
-    marginLeft: '25px',
-    marginRight: '25px',
-    paddingLeft: '35px',
-    paddingRight: '35px',
-    background: myTheme.gradient.greenGradient,
-    color: myTheme.palette.common.white
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
   },
   noDecoration: {
     textDecoration: 'none !important',
-    color: 'green'
+    color: 'green',
   },
-  cartIconStyle:{
-    width: '40px'
-  }
+  cartIconStyle: {
+    width: '40px',
+  },
 })
 
 function NavBar(props) {
   const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen)
+  }
 
   const {
     classes,
@@ -155,7 +151,7 @@ function NavBar(props) {
     cart,
     themeSetting,
   } = props
-  const [currentTheme,setCurrentTheme] = useState();
+  const [currentTheme, setCurrentTheme] = useState()
 
   const menuItems = [
     {
@@ -165,13 +161,13 @@ function NavBar(props) {
     },
     {
       link: '/cart',
-      name: 'cart',
+      name: '.',
       icon: <img src={CartIcon} alt="" className={classes.cartIconStyle} />,
     },
     {
       //link: "",
-      name: "Sign In",
-      //onClick: openLoginDialog
+      name: 'Sign In',
+      onClick: openLoginDialog,
     },
     // {
     //   name: "Register",
@@ -219,14 +215,21 @@ function NavBar(props) {
       dispatch(setThemeLight())
     }
   }
-  
+
   // useEffect(()=>{
   //   setCurrentTheme(themeSetting.theme)
   // },[themeSetting])
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={ currentTheme === true ? clsx(classes.appBar, classes.appBarNight) : clsx(classes.appBar,classes.appBarDay) }>
+      <AppBar
+        position="fixed"
+        className={
+          currentTheme === true
+            ? clsx(classes.appBar, classes.appBarNight)
+            : clsx(classes.appBar, classes.appBarDay)
+        }
+      >
         <Toolbar className={classes.toolbar}>
           <Link to={'/'}>
             <img
@@ -253,7 +256,7 @@ function NavBar(props) {
           </Hidden>
           <div>
             <Link to={'/'}>
-              <img src={Logo} className={classes.logo} alt="Logo"/>
+              <img src={Logo} className={classes.logo} alt="Logo" />
             </Link>
           </div>
           <div>
@@ -282,43 +285,43 @@ function NavBar(props) {
                         classes={{ text: classes.menuButtonText }}
                       >
                         {element.icon ? element.icon : ''}
-                        {element.name === 'cart' ? (
+                        {element.name === '.' ? (
                           <Badge badgeContent={count} color="primary">
                             {element.name}
                           </Badge>
                         ) : (
-                          element.name 
+                          element.name
                         )}
-                        
                       </Button>
                     </Link>
                   )
                 }
                 return (
-                  <Button
-                    color="secondary"
-                    size="large"
-                    onClick={element.onClick}
-                    classes={{ text: `${classes.menuButtonText} ${classes.signInBtn}` }}
-                    key={element.name}
-                  >
-                    {element.name}
-                  </Button>
+                    <LoginPopup 
+                      isDialogOpened={isOpen}
+                      handleCloseDialog={() => setIsOpen(false)}
+                    />
                 )
               })}
               {/* <Button className={classes.signIn}>
                 Sign In
               </Button> */}
               {showThemeIcon === true ? (
-                <Button className={classes.nightModeBtn} onClick={() => handleClick(true)}>
-                <img
-                  src={NightMode}
-                  className={classes.nightMode}
-                  alt="Light Mode"
-                />
-              </Button>
+                <Button
+                  className={classes.nightModeBtn}
+                  onClick={() => handleClick(true)}
+                >
+                  <img
+                    src={NightMode}
+                    className={classes.nightMode}
+                    alt="Light Mode"
+                  />
+                </Button>
               ) : (
-                <Button className={classes.nightModeBtn} onClick={() => handleClick(false)}>
+                <Button
+                  className={classes.nightModeBtn}
+                  onClick={() => handleClick(false)}
+                >
                   <img
                     src={LightMode}
                     className={classes.nightMode}

@@ -96,6 +96,10 @@ const styles = theme => ({
       [theme.breakpoints.down("xs")]: {
         paddingTop: `${theme.spacing(1)}px !important`
       }
+    ,
+    ".positionRelative": {
+      position: 'relative !important'
+    }
     }
   }
 });
