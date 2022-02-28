@@ -19,6 +19,16 @@ const dispatchError = (dispatch, type, error) => {
     });
 }
 
+export const register = reqPayload => dispatch =>
+    axios.post(`${apiUrl}/store/signup`, reqPayload).then(res => {
+        dispatch({ type: appConstants.USER_FS_REGSTER_SUCCESS, payload: res.data });
+        axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
+        return { success: true, promptWelcome: res.data.promptWelcome };
+    }).catch(error => {
+        dispatchError(dispatch, appConstants.API_ERROR, error);
+        return { success: false, reason: error.response.data.message };
+    });
+
 export const login = reqPayload => dispatch =>
     axios.post(`${apiUrl}/store/login`, reqPayload).then(res => {
         dispatch({ type: appConstants.USER_FS_LOGIN_SUCCESS, payload: res.data });
