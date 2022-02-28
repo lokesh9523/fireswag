@@ -166,8 +166,7 @@ function NavBar(props) {
     
   } = props
   const [currentTheme, setCurrentTheme] = useState()
-  //const [checkAuth, setCheckAuth] = useState(isAuthenticated)
-//console.log('checkAuth',checkAuth)
+
   const menuItems = [
     {
       link: '/',
@@ -220,7 +219,7 @@ function NavBar(props) {
     setCount(cart.length)
     setShowThemeIcon(themeSetting.theme)
     setCurrentTheme(themeSetting.theme)
-  }, [cart, themeSetting,isAuthenticated])
+  }, [cart, themeSetting])
 
   const handleClick = (value) => {
     localStorage.setItem('theme', value)
@@ -324,7 +323,7 @@ function NavBar(props) {
                     </Link>
                   )
                 }
-                if(userToken !== null && isAuthenticated ){
+                if(userToken !== null){
                   return(
                     <Box className={classes.userIcon} sx={{ flexGrow: 0, display: { xs: 'block' } }}>
                       <Tooltip title="Open settings">
