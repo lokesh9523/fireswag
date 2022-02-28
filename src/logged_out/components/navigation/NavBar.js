@@ -25,6 +25,12 @@ import typography from '../../../theme/typography'
 import clsx from 'clsx'
 import MaxWidthDialog from '../register_login/Child'
 import LoginPopup from '../register_login/LoginPopup'
+import Box from '@mui/material/Box'
+import Avatar from '@mui/material/Avatar'
+import Tooltip from '@mui/material/Tooltip'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
 
 const styles = (theme) => ({
   appBar: {
@@ -130,11 +136,17 @@ const styles = (theme) => ({
   cartIconStyle: {
     width: '40px',
   },
+  userIcon:{
+    float:'left'
+  }
 })
 
 function NavBar(props) {
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const userToken = localStorage.getItem('USER_FS_TOKEN')
 
   const handleOpen = () => {
     setIsOpen(!isOpen)
@@ -150,9 +162,12 @@ function NavBar(props) {
     selectedTab,
     cart,
     themeSetting,
+    isAuthenticated
+    
   } = props
   const [currentTheme, setCurrentTheme] = useState()
-
+  //const [checkAuth, setCheckAuth] = useState(isAuthenticated)
+//console.log('checkAuth',checkAuth)
   const menuItems = [
     {
       link: '/',
@@ -205,7 +220,7 @@ function NavBar(props) {
     setCount(cart.length)
     setShowThemeIcon(themeSetting.theme)
     setCurrentTheme(themeSetting.theme)
-  }, [cart, themeSetting])
+  }, [cart, themeSetting,isAuthenticated])
 
   const handleClick = (value) => {
     localStorage.setItem('theme', value)
@@ -216,9 +231,22 @@ function NavBar(props) {
     }
   }
 
-  // useEffect(()=>{
-  //   setCurrentTheme(themeSetting.theme)
-  // },[themeSetting])
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget)
+  }
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null)
+  }
+
+  const logOut = () => {
+    localStorage.clear()
+    window.location.href = '/'
+  }
 
   return (
     <div className={classes.root}>
@@ -296,12 +324,44 @@ function NavBar(props) {
                     </Link>
                   )
                 }
-                return (
-                    <LoginPopup 
-                      isDialogOpened={isOpen}
-                      handleCloseDialog={() => setIsOpen(false)}
-                    />
-                )
+                if(userToken !== null && isAuthenticated ){
+                  return(
+                    <Box className={classes.userIcon} sx={{ flexGrow: 0, display: { xs: 'block' } }}>
+                      <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        sx={{ mt: '45px' }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                      >
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography onClick={logOut} textAlign="center">
+                            Logout
+                          </Typography>
+                        </MenuItem>
+                      </Menu>
+                    </Box>
+                  )
+                }else{
+                  return (<LoginPopup 
+                    isDialogOpened={isOpen}
+                    handleCloseDialog={() => setIsOpen(false)}
+                  />)
+                }
               })}
               {/* <Button className={classes.signIn}>
                 Sign In
@@ -368,6 +428,7 @@ NavBar.propTypes = {
 const mapStateToProps = (state) => {
   return {
     themeSetting: state.theme,
+    isAuthenticated: state.auth.isAuthenticated
   }
 }
 

@@ -1,5 +1,5 @@
 
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // import classNames from "classnames";
 import { withRouter } from "react-router-dom";
@@ -13,10 +13,10 @@ import {
     TableCell,
     TableContainer,
     Paper,
-
     Grid
 } from "@material-ui/core";
 import { getProductsById, apiUrl } from './../../../redux/actions/userapi';
+import { Identity } from "@mui/base";
 
 
 const useStyles = makeStyles(theme => ({
@@ -34,7 +34,19 @@ const useStyles = makeStyles(theme => ({
 
 function Cart(props) {
     const { history, cart } = props;
+    const [updatedCart, setuUpdatedCart] = useState([]);    
     const classes = useStyles();
+    
+    useEffect(()=>{
+        setuUpdatedCart(cart)
+    },[cart])
+
+    const deleteHandle = (id) => {
+        setuUpdatedCart({updatedCart: cart.filter(item => item._id !== id)})
+    }
+
+    console.log('updatedCart',updatedCart)
+
     return (
         <Fragment>
             <div className={classes.root}>
@@ -55,10 +67,10 @@ function Cart(props) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-
-                                {cart.map((row, index) => (
+                                {updatedCart.length > 0 ?
+                                updatedCart.map((row, index) => (
                                     <TableRow
-                                        key={row.name}
+                                        key={index}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row" >
@@ -68,9 +80,11 @@ function Cart(props) {
                                         <TableCell align="right">{row.price}</TableCell>
                                         <TableCell align="right">{`1`}</TableCell>
                                         <TableCell align="right">{row.price}</TableCell>
+                                        <TableCell align="right"><span onClick={()=>deleteHandle(row._id)}>delete</span></TableCell>
                                     </TableRow>
-
-                                ))}
+                                )):'No items'
+                            
+                            }
                             </TableBody>
                         </Table>
                     </TableContainer>
