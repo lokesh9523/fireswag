@@ -16,7 +16,7 @@ import RegisterPopup from './RegisterPopup'
 import { login } from '../../../redux/actions/userapi'
 
 const LoginPopup = (props) => {
-  const { classes } = props
+  const { classes, success } = props
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -322,6 +322,7 @@ const mapStateToProps = (state) => {
     // errorMessage: state.Auth.errorMessage,
     // successMessage: state.Auth.successMessage,
     // showLoading: state.Auth.showLoading,
+    success: state
   }
 }
 

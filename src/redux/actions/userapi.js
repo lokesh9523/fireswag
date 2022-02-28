@@ -33,6 +33,7 @@ export const login = reqPayload => dispatch =>
     axios.post(`${apiUrl}/store/login`, reqPayload).then(res => {
         dispatch({ type: appConstants.USER_FS_LOGIN_SUCCESS, payload: res.data });
         axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
+        //window.location.href = '/'
         return { success: true, promptWelcome: res.data.promptWelcome };
     }).catch(error => {
         dispatchError(dispatch, appConstants.API_ERROR, error);
