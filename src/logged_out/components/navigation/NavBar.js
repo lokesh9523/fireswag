@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useCallback } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import {
@@ -23,7 +23,7 @@ import { setThemeDark, setThemeLight } from '../../../redux/actions/theme'
 import myTheme from '../../../theme'
 import typography from '../../../theme/typography'
 import clsx from 'clsx'
-import MaxWidthDialog from '../register_login/Child'
+// import MaxWidthDialog from '../register_login/Child'
 import LoginPopup from '../register_login/LoginPopup'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
@@ -136,35 +136,35 @@ const styles = (theme) => ({
   cartIconStyle: {
     width: '40px',
   },
-  userIcon:{
-    float:'left'
+  userIcon: {
+    float: 'left'
   }
 })
 
 function NavBar(props) {
-  const dispatch = useDispatch()
-  const [isOpen, setIsOpen] = useState(false)
-  const [anchorElUser, setAnchorElUser] = React.useState(null)
-  const [anchorElNav, setAnchorElNav] = React.useState(null)
-  const userToken = localStorage.getItem('USER_FS_TOKEN')
-
-  const handleOpen = () => {
-    setIsOpen(!isOpen)
-  }
-
   const {
-    classes,
-    openRegisterDialog,
-    openLoginDialog,
+    classes, openLoginDialog,
     handleMobileDrawerOpen,
     handleMobileDrawerClose,
     mobileDrawerOpen,
     selectedTab,
     cart,
     themeSetting,
-    isAuthenticated
-    
   } = props
+  const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const userToken = localStorage.getItem('USER_FS_TOKEN');
+
+  const [count, setCount] = useState(0);
+  // const [isMobileOpen, setIsMobileOpen] = useState(false);
+  // const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
+  const [showThemeIcon, setShowThemeIcon] = useState(themeSetting.theme);
+
+  // const handleOpen = () => {
+  //   setIsOpen(!isOpen)
+  // }
   const [currentTheme, setCurrentTheme] = useState()
 
   const menuItems = [
@@ -194,26 +194,22 @@ function NavBar(props) {
     //   icon: <LockOpenIcon className="text-white" />
     // },
   ]
-  const [count, setCount] = useState(0)
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false)
 
-  const openMobileDrawer = useCallback(() => {
-    setIsMobileOpen(true)
-  }, [setIsMobileOpen])
+  // const openMobileDrawer = useCallback(() => {
+  //   setIsMobileOpen(true)
+  // }, [setIsMobileOpen])
 
-  const closeMobileDrawer = useCallback(() => {
-    setIsMobileOpen(false)
-  }, [setIsMobileOpen])
+  // const closeMobileDrawer = useCallback(() => {
+  //   setIsMobileOpen(false)
+  // }, [setIsMobileOpen])
 
-  const openDrawer = useCallback(() => {
-    setIsSideDrawerOpen(true)
-  }, [setIsSideDrawerOpen])
+  // const openDrawer = useCallback(() => {
+  //   setIsSideDrawerOpen(true)
+  // }, [setIsSideDrawerOpen])
 
-  const closeDrawer = useCallback(() => {
-    setIsSideDrawerOpen(false)
-  }, [setIsSideDrawerOpen])
-  const [showThemeIcon, setShowThemeIcon] = useState(themeSetting.theme)
+  // const closeDrawer = useCallback(() => {
+  //   setIsSideDrawerOpen(false)
+  // }, [setIsSideDrawerOpen])
 
   useEffect(() => {
     setCount(cart.length)
@@ -297,11 +293,11 @@ function NavBar(props) {
               </IconButton>
             </Hidden>
             <Hidden smDown>
-              {menuItems.map((element) => {
+              {menuItems.map((element, index) => {
                 if (element.link) {
                   return (
                     <Link
-                      key={element.name}
+                      key={index}
                       to={element.link}
                       className={classes.noDecoration}
                       onClick={handleMobileDrawerClose}
@@ -323,9 +319,9 @@ function NavBar(props) {
                     </Link>
                   )
                 }
-                if(userToken !== null){
-                  return(
-                    <Box className={classes.userIcon} sx={{ flexGrow: 0, display: { xs: 'block' } }}>
+                if (userToken !== null) {
+                  return (
+                    <Box className={classes.userIcon} sx={{ flexGrow: 0, display: { xs: 'block' } }} key={index}>
                       <Tooltip title="Open settings">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                           <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -355,8 +351,8 @@ function NavBar(props) {
                       </Menu>
                     </Box>
                   )
-                }else{
-                  return (<LoginPopup 
+                } else {
+                  return (<LoginPopup
                     isDialogOpened={isOpen}
                     handleCloseDialog={() => setIsOpen(false)}
                   />)
@@ -404,10 +400,10 @@ function NavBar(props) {
         open={mobileDrawerOpen}
         selectedItem={selectedTab}
         onClose={handleMobileDrawerClose}
-        // anchor="left"
-        // open={isMobileOpen}
-        // selectedItem={selectedTab}
-        // onClose={closeMobileDrawer}
+      // anchor="left"
+      // open={isMobileOpen}
+      // selectedItem={selectedTab}
+      // onClose={closeMobileDrawer}
       />
     </div>
   )

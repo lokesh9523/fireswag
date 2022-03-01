@@ -3,13 +3,13 @@ import * as appConstants from './../../constants/appConstants';
 
 
 
-export const apiUrl = `https://api.fireswag.org/api`;
+export const apiUrl = `http://localhost:3001/api`;
 
 const setToken = () => {
-    axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.ADMIN_FS_TOKEN);
+    axios.defaults.headers.common['fireswag-jwt-store-auth'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
 }
 // set token when page refreshes 
-axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.ADMIN_FS_TOKEN);
+axios.defaults.headers.common['fireswag-jwt-store-auth'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
 
 const dispatchError = (dispatch, type, error) => {
     dispatch({
@@ -22,7 +22,7 @@ const dispatchError = (dispatch, type, error) => {
 export const register = reqPayload => dispatch =>
     axios.post(`${apiUrl}/store/signup`, reqPayload).then(res => {
         dispatch({ type: appConstants.USER_FS_REGSTER_SUCCESS, payload: res.data });
-        axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
+        axios.defaults.headers.common['fireswag-jwt-store-auth'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
         return { success: true, promptWelcome: res.data.promptWelcome };
     }).catch(error => {
         dispatchError(dispatch, appConstants.API_ERROR, error);
@@ -32,16 +32,16 @@ export const register = reqPayload => dispatch =>
 export const login = reqPayload => dispatch =>
     axios.post(`${apiUrl}/store/login`, reqPayload).then(res => {
         dispatch({ type: appConstants.USER_FS_LOGIN_SUCCESS, payload: res.data });
-        axios.defaults.headers.common['fireswag-jwt-store'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
+        axios.defaults.headers.common['fireswag-jwt-store-auth'] = localStorage.getItem(appConstants.USER_FS_TOKEN);
         //window.location.href = '/'
         return { success: true, promptWelcome: res.data.promptWelcome };
     }).catch(error => {
         dispatchError(dispatch, appConstants.API_ERROR, error);
-        return { success: false };
+        return { success: false, error };
     });
 
 export const logout = () => dispatch => {
-    delete axios.defaults.headers.common['fireswag-jwt-store'];
+    delete axios.defaults.headers.common['fireswag-jwt-store-auth'];
     dispatch({ type: appConstants.USER_FS_LOGOUT_SUCCESS });
 }
 
@@ -64,6 +64,30 @@ export const getProductsById = (id) => dispatch =>
 
 export const getProducts = (query) => dispatch =>
     axios.get(`${apiUrl}/store/products?${query}`).then(res => {
+        return res.data;
+    }).catch(error => {
+        dispatchError(dispatch, appConstants.SHOW_ALERT_DIALOG, error);
+        return { success: false };
+    });
+
+export const getUserAddress = (id) => dispatch =>
+    axios.get(`${apiUrl}/store/user/${id}/address`).then(res => {
+        return res.data;
+    }).catch(error => {
+        dispatchError(dispatch, appConstants.SHOW_ALERT_DIALOG, error);
+        return { success: false };
+    });
+
+export const addUserAddress = (id, reqPayload) => dispatch =>
+    axios.post(`${apiUrl}/store/user/${id}/address`, reqPayload).then(res => {
+        return res.data;
+    }).catch(error => {
+        dispatchError(dispatch, appConstants.SHOW_ALERT_DIALOG, error);
+        return { success: false };
+    });
+
+export const addorder = (id, reqPayload) => dispatch =>
+    axios.post(`${apiUrl}/store/user/${id}/order`, reqPayload).then(res => {
         return res.data;
     }).catch(error => {
         dispatchError(dispatch, appConstants.SHOW_ALERT_DIALOG, error);

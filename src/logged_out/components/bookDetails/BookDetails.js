@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 // import classNames from "classnames";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from '@material-ui/styles';
-
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import {
     Button,
     Typography,
@@ -30,44 +31,19 @@ const useStyles = makeStyles(theme => ({
 function BookDetails(props) {
     const { history, setCart, cart, getProductsById } = props;
     const classes = useStyles();
-    const books = [
-        {
-            link: "/book1",
-            name: "Crypto Currency",
-            url: `${process.env.PUBLIC_URL}/images/logged_out/book1.jpeg`,
-            author: 'Alex',
-            published: '2012',
-            description: 'Most cryptocurrencies use blockchain technology to record transactions. For example, the bitcoin network and Ethereum network are both based on blockchain. ',
-            price: '$14.99'
-        },
-        {
-            link: "/book2",
-            name: "Block Chain Technology",
-            url: `${process.env.PUBLIC_URL}/images/logged_out/book2.jpeg`,
-            author: 'Alex',
-            published: '2012',
-            description: 'Most cryptocurrencies use blockchain technology to record transactions. For example, the bitcoin network and Ethereum network are both based on blockchain. ',
-            price: '$14.99'
-        },
-        {
-            link: "/book3",
-            name: "Mastering Crypto",
-            url: `${process.env.PUBLIC_URL}/images/logged_out/book3.jpg`,
-            author: 'Alex',
-            published: '2012',
-            description: 'Most cryptocurrencies use blockchain technology to record transactions. For example, the bitcoin network and Ethereum network are both based on blockchain. ',
-            price: '$14.99'
-        },
-    ];
-    const [selectedBook, setSelectedBook] = useState({});
-    const [selectedBookId, setSelectedBookId] = useState(null);
 
-    // useEffect(() => {
-    //     // if (!selectedBook) {
-    //     setSelectedBookId(books[props.match.params.productid])
-    //     console.log("iam heree")
-    //     // }
-    // }, [props.match.params.productid]);
+    const [selectedBook, setSelectedBook] = useState({});
+    const [quantity, setQuantity] = useState(1);
+    const [errorMsg, setErrorMsg] = useState(null)
+
+    useEffect(() => {
+        let checkProductExists = cart.findIndex(e => e._id === selectedBook._id);
+        console.log(checkProductExists, "==============================checkProductExists")
+        if (checkProductExists !== -1) {
+            console.log("iam here", cart[checkProductExists]['quantity'])
+            setQuantity(cart[checkProductExists]['quantity']);
+        }
+    }, [cart, selectedBook]);
 
     useEffect(() => {
         (async () => {
@@ -86,8 +62,28 @@ function BookDetails(props) {
     const handleAddCart = (event) => {
         event.preventDefault();
         let temp = [...cart];
-        temp.push(selectedBook);
+        let checkProductExists = temp.findIndex(e => e._id === selectedBook._id);
+        if (checkProductExists !== -1) {
+            temp[checkProductExists]['quantity'] = quantity;
+        } else {
+            selectedBook.quantity = quantity;
+            temp.push(selectedBook);
+        }
         setCart(temp);
+    }
+    const handleQuantity = (type) => {
+        setErrorMsg(null);
+        if (type === 'add') {
+            if ((quantity + 1) > selectedBook.total_count) {
+                setErrorMsg('Required Quantity Not Available')
+            } else {
+                setQuantity(quantity === 0 ? 1 : quantity + 1)
+            }
+        }
+
+        if (type === 'sub') {
+            setQuantity(quantity === 0 ? 1 : quantity - 1)
+        }
     }
     return (
         <Fragment>
@@ -105,10 +101,18 @@ function BookDetails(props) {
                         {/* <Typography variant="h5"><span className={classes.textcolor}>Author: </span>{selectedBook.author}</Typography>
                         <Typography variant="h5"><span className={classes.textcolor}>Published: </span>{selectedBook.published}</Typography> */}
                         <Typography variant="h5"><span className={classes.textcolor}>Description: </span>{selectedBook.description}</Typography>
-
+                        <Typography variant="h5"><span className={classes.textcolor}>Available Quantity: </span>{selectedBook.total_count}</Typography>
+                        <Grid item style={{ padding: '8px', display: 'inline-flex' }}>
+                            {/* <Typography variant="h6"> */}
+                            <span className={classes.textcolor}>Quantity: </span>&nbsp;&nbsp;
+                                    <span><RemoveIcon style={{ cursor: 'pointer', color: 'red' }} onClick={(e) => handleQuantity('sub')} /></span>&nbsp;&nbsp;<span>{quantity}</span>&nbsp;&nbsp;<span><AddIcon style={{ cursor: 'pointer', color: 'green' }} onClick={(e) => handleQuantity('add')} /></span>
+                            {/* </Typography> */}
+                        </Grid>
                         <Grid item style={{ padding: '8px' }}>
                             <Button variant="outlined" style={{ color: '#95cd33' }} onClick={handleAddCart}>ADD TO CART</Button>
                         </Grid>
+
+                        {errorMsg && <Grid><Typography variant="h6" style={{ color: 'red' }}>{errorMsg}</Typography></Grid>}
 
                     </Grid>
                 </Grid>

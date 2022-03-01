@@ -13,21 +13,24 @@ import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { Grid, Box } from '@mui/material'
 import RegisterPopup from './RegisterPopup'
-import { login } from '../../../redux/actions/userapi'
+import { login } from '../../../redux/actions/userapi';
+import * as md5 from 'md5';
 
 const LoginPopup = (props) => {
-  const { classes, success } = props
+  const { classes, success, login } = props
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   let errorsObj = { email: '', password: '' }
   const [errors, setErrors] = useState(errorsObj)
-  const [showForm, setShowForm] = useState(false)
+  const [showForm, setShowForm] = useState(false);
+  const [showEye, setShowEye] = React.useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
 
   const formSubmit = async (event) => {
     event.stopPropagation()
     event.preventDefault()
-
+    setErrorMsg(null);
     let error = false
     const errorObj = { ...errorsObj }
 
@@ -51,13 +54,20 @@ const LoginPopup = (props) => {
     setErrors(errorObj)
     if (error) return
     const userData = {
-      email:email,
-      password: password
+      email: email,
+      password: md5(password)
     }
-    dispatch(login(userData))
+    let res = await login(userData);
+    if (!res.success) {
+      // console.log(error.response ? error.response.data : error,"============")
+      setErrorMsg(res?.error?.response?.data?.message)
+      // errorObj.
+    }else{
+      setEmail('');
+      setPassword('');
+    }
+    // dispatch(login(userData))
   }
-
-  const [showEye, setShowEye] = React.useState(false)
   const handleEye = (event) => setShowEye((value) => !value)
   const handleForm = (event) => {
     if (event.target.id === 'Login') {
@@ -148,6 +158,11 @@ const LoginPopup = (props) => {
                         </span>
                       )}
                     </div>
+                    {errorMsg && (
+                      <span className={classes.formErrors}>
+                        {errorMsg}
+                      </span>
+                    )}
                     <Typography className={`${classes.loginPopupLink}`}>
                       Forgot Password?
                     </Typography>
@@ -328,5 +343,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  {login},
+  { login },
 )(withStyles(styles, { withTheme: true })(memo(LoginPopup)))

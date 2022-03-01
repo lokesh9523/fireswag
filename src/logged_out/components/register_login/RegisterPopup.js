@@ -6,33 +6,35 @@ import TextField from '@mui/material/TextField'
 import { makeStyles } from '@material-ui/styles'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
-import { connect, useDispatch } from 'react-redux'
-import { register } from '../../../redux/actions/userapi'
-import myTheme from '../../../theme'
-import { Grid } from '@mui/material'
-import PropTypes from 'prop-types'
+import { connect, useDispatch } from 'react-redux';
+import { register } from '../../../redux/actions/userapi';
+import myTheme from '../../../theme';
+import { Grid } from '@mui/material';
+import PropTypes from 'prop-types';
+import * as md5 from 'md5';
 
 const RegisterPopup = (props) => {
-  const { success, isAuthenticated, error } = props
-  const [regSuccess, setRegSuccess] = useState()
-  const [regError, setRegError] = useState()
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
-  const [phone, setPhone] = useState('')
+  const { success, isAuthenticated, error ,register} = props
+  const [regSuccess, setRegSuccess] = useState();
+  const [regError, setRegError] = useState();
+  const classes = useStyles();
+  const dispatch = useDispatch;
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  let errorsObj = { email: '', password: '' }
+  const [errors, setErrors] = useState(errorsObj);
+  const [showEye, setShowEye] = React.useState(false);
+
   const handlePhone = (event) => {
     const re = /^[0-9\b]+$/
     if (event.target.value === '' || re.test(event.target.value)) {
       setPhone(event.target.value)
     }
   }
-  console.log('regSuccess', error)
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  let errorsObj = { email: '', password: '' }
-  const [errors, setErrors] = useState(errorsObj)
   const formSubmit = async (event) => {
     event.stopPropagation()
     event.preventDefault()
@@ -81,29 +83,36 @@ const RegisterPopup = (props) => {
       lastname: lastname,
       phone: phone,
       email: email,
-      password: password,
+      password: md5(password)
     }
-    let res = await dispatch(register(userData))
-    console.log('main',res.reason)
+    let res = await register(userData)
+    console.log('main', res.reason)
     if (res.success) {
-      messageHandle()
-    }else{
-        errorHandle()
-        //console.log('134', res, res.error)
-        setRegSuccess(false)
-        setRegError(res.reason)
+      messageHandle();
+      setFirstname('');
+      setLastname('');
+      setPhone('');
+      setEmail('');
+      setPassword('');
+    } else {
+      errorHandle()
+      setRegSuccess(false)
+      setRegError(res.reason)
 
     }
     //dispatch(register(userData))
   }
-  const [showEye, setShowEye] = React.useState(false)
+
   const handleEye = (event) => setShowEye((value) => !value)
+
   const messageHandle = () => {
     setRegSuccess(true)
   }
+
   const errorHandle = (msg) => {
     setRegError(msg)
   }
+
   return (
     <>
       <div>
@@ -114,12 +123,12 @@ const RegisterPopup = (props) => {
               <div className={classes.successMsg}>
                 You have registered successfully
               </div>
-            ) :null}
+            ) : null}
             {regSuccess === false ? (
               <div className={classes.errorMsg}>
                 {regError}
               </div>
-            ) :null}
+            ) : null}
           </div>
           {/* </Grid> */}
           <Grid item xs={12} sm={6}>
@@ -291,14 +300,17 @@ const useStyles = makeStyles({
 })
 
 RegisterPopup.propTypes = {
-    //history: PropTypes.object,
-    //login: PropTypes.func.isRequired,
-    //isAuthenticated: PropTypes.bool,
-    //promptWelcome: PropTypes.bool,
-    error: PropTypes.object.isRequired,
-    //clearErrors: PropTypes.func.isRequired,
-    //modules: PropTypes.array.isRequired
-  };
-
-export default withRouter(RegisterPopup)
+  //history: PropTypes.object,
+  //login: PropTypes.func.isRequired,
+  //isAuthenticated: PropTypes.bool,
+  //promptWelcome: PropTypes.bool,
+  error: PropTypes.object.isRequired,
+  //clearErrors: PropTypes.func.isRequired,
+  //modules: PropTypes.array.isRequired
+};
+export default connect(
+  null,
+  { register },
+)(withRouter(RegisterPopup))
+// export default withRouter(RegisterPopup)
 

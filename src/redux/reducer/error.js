@@ -4,10 +4,11 @@ const initialState = {
   message: null,
   status: null,
 }
-
+ 
 export default (state = initialState, action) => {
   switch (action.type) {
     case appConstants.API_ERROR:
+      console.log("iam hereeeeeee",action,'===================')
       return {
         error: action.payload,
         message: action.payload.message || 'Unknown Error',

@@ -4,7 +4,7 @@ const initialState = {
   isAuthenticated: false,
   isSuperAdmin: false,
   token: null,
-  account:null
+  account: null
 };
 
 try {
@@ -21,16 +21,18 @@ export default (state = initialState, action) => {
     case appConstants.ADMIN_FS_LOGIN_SUCCESS:
       localStorage.setItem(appConstants.ADMIN_FS_TOKEN, action.payload.token);
       localStorage.setItem(appConstants.FS_ACCOUNT_TYPE, action.payload.data.account.role_id.name);
-      localStorage.setItem(appConstants.ADMIN_FS_ACCOUNT,JSON.stringify(action.payload.data.account))
+      localStorage.setItem(appConstants.ADMIN_FS_ACCOUNT, JSON.stringify(action.payload.data.account))
       return {
         isAuthenticated: true,
         token: action.payload.token,
         isSuperAdmin: true,
-        account:action.payload.data.account
+        account: action.payload.data.account
       }
     case appConstants.USER_FS_LOGIN_SUCCESS:
+      console.log(action.payload)
       localStorage.setItem(appConstants.USER_FS_TOKEN, action.payload.token);
-      localStorage.setItem(appConstants.FS_ACCOUNT_TYPE, action.payload.data.role_type);
+      localStorage.setItem(appConstants.FS_ACCOUNT_TYPE, action.payload.data.user.role_id?.name);
+      localStorage.setItem(appConstants.USER_FS_ID, action.payload.data.user?._id);
       return {
         isAuthenticated: true,
         token: action.payload.token,
@@ -45,7 +47,7 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         isSuperAdmin: false,
         token: null,
-        account:null
+        account: null
       }
     case appConstants.USER_FS_LOGOUT_SUCCESS:
       localStorage.removeItem(appConstants.USER_FS_TOKEN);
